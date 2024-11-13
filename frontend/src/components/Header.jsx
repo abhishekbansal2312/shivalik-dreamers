@@ -66,6 +66,16 @@ const Navbar = ({ darkMode }) => {
             Home
           </Link>
           <Link
+            to="/users"
+            className={`transition-all duration-300 ${
+              darkMode
+                ? "text-gray-300 hover:text-gray-400"
+                : "text-gray-900 hover:text-blue-500"
+            } text-lg`}
+          >
+            Users
+          </Link>
+          <Link
             to="/menu"
             className={`transition-all duration-300 ${
               darkMode
