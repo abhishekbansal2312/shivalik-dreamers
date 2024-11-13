@@ -120,25 +120,3 @@ exports.deleteUser = async (req, res) => {
       .json({ message: "Error deleting user", error: error.message });
   }
 };
-
-exports.getParticipatedEvents = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: "Invalid user ID format" });
-  }
-
-  try {
-    const user = await User.findById(id).populate("participatedEvents");
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.status(200).json(user.participatedEvents);
-  } catch (error) {
-    res.status(500).json({
-      message: "Error fetching participated events",
-      error: error.message,
-    });
-  }
-};

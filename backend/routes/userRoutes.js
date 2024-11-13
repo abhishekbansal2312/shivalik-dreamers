@@ -12,13 +12,13 @@ const authenticateToken = require("../middlewares/verifyToken");
 const authenticateAdmin = require("../middlewares/authenticateAdmin");
 
 // Define routes
-router.get("/", authenticateAdmin, allUsers);
-router.post("/", authenticateAdmin, createUser);
-router.get("/:id", authenticateToken, singleUser);
+router.get("/", allUsers);
+router.post("/", createUser);
+router.get("/:id", singleUser);
 
 // Apply both token and admin verification
-router.put("/:id", authenticateAdmin, updateUser);
-router.delete("/:id", authenticateAdmin, deleteUser);
+router.put("/:id", updateUser);
+router.delete("/:id", deleteUser);
 
 // 404 Route
 router.use((req, res) => {
