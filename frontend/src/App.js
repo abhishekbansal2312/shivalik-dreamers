@@ -4,7 +4,8 @@ import Home from "../src/pages/Home";
 import Login from "../src/pages/Login";
 // import Register from "../src/pages/Register";
 import { useAuth } from "../src/provider/AuthProvider"; // Ensure the path is correct
-import './index.css';
+import "./index.css";
+import Users from "../src/components/user/Users";
 
 const App = () => {
   // Call useAuth and destructure values from it
@@ -53,6 +54,8 @@ const App = () => {
               />
             }
           />
+
+          <Route path="/users" element={<Users darkMode={darkMode} />} />
 
           {/* Uncomment Register if needed */}
           {/* <Route path="/register" element={<Register darkMode={darkMode} />} /> */}
