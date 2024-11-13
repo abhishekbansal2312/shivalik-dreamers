@@ -1,10 +1,10 @@
 const User = require("../models/User");
 const mongoose = require("mongoose");
 
-// Get all users
+// Get all users, sorted by newest first
 exports.allUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().sort({ createdAt: -1 }); // Sort by createdAt in descending order
     res.status(200).json(users);
   } catch (error) {
     res
@@ -12,6 +12,7 @@ exports.allUsers = async (req, res) => {
       .json({ message: "Error fetching users", error: error.message });
   }
 };
+
 
 // Get a single user by ID
 exports.singleUser = async (req, res) => {

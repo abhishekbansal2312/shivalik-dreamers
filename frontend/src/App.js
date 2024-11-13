@@ -7,7 +7,7 @@ import { useAuth } from "../src/provider/AuthProvider"; // Ensure the path is co
 import "./index.css";
 import Users from "../src/components/user/Users";
 import ProfilePage from "./pages/Profile";
-
+import UsersDetail from "./components/user/UserDetail"
 import MealForm from "../src/components/order/MealForm"; // Add this line
 import MealList from "../src/components/order/MealList"; // Add this line
 
@@ -77,6 +77,7 @@ const App = () => {
           {/* Users route */}
           <Route path="/users" element={<Users darkMode={darkMode} />} />
 
+          <Route path="/users/:id" element={<UsersDetail darkMode={darkMode} />} />
 
           {/* Meal List route */}
           <Route path="/meals" element={<MealList darkMode={darkMode} />} />
