@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
+import { SunIcon, MoonIcon } from "@heroicons/react/outline"; // Add sun and moon icons
 import { useAuth } from "../provider/AuthProvider";
 
-const Navbar = ({ darkMode }) => {
+const Navbar = ({ darkMode, setDarkMode }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const { isAuthenticated, setIsAuthenticated, userRole } = useAuth();
@@ -30,6 +31,10 @@ const Navbar = ({ darkMode }) => {
         navigate("/login");
       })
       .catch((error) => console.error("Logout error:", error));
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev); // Toggle dark mode
   };
 
   return (
@@ -152,6 +157,18 @@ const Navbar = ({ darkMode }) => {
           )}
         </div>
 
+        {/* Dark Mode Toggle Button */}
+        <button
+          onClick={toggleDarkMode}
+          className="p-2 rounded-full transition-all duration-300"
+        >
+          {darkMode ? (
+            <SunIcon className="w-6 h-6 text-yellow-500" />
+          ) : (
+            <MoonIcon className="w-6 h-6 text-blue-500" />
+          )}
+        </button>
+
         {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button
@@ -251,7 +268,7 @@ const Navbar = ({ darkMode }) => {
         ) : (
           <Link
             to="/login"
-            className={`block px-6 py-4 transition-all duration-300 ${
+            className={`block px-6 py-4 transition-all duration-300 w-full text-left ${
               darkMode
                 ? "text-gray-300 hover:bg-gray-700"
                 : "text-gray-900 hover:bg-gray-100"

@@ -6,6 +6,8 @@ import Login from "../src/pages/Login";
 import { useAuth } from "../src/provider/AuthProvider"; // Ensure the path is correct
 import "./index.css";
 import Users from "../src/components/user/Users";
+import MealForm from "../src/components/order/MealForm"; // Add this line
+import MealList from "../src/components/order/MealList"; // Add this line
 
 const App = () => {
   // Call useAuth and destructure values from it
@@ -55,7 +57,15 @@ const App = () => {
             }
           />
 
+          {/* Users route */}
           <Route path="/users" element={<Users darkMode={darkMode} />} />
+
+          {/* Meal List route */}
+          <Route path="/meals" element={<MealList darkMode={darkMode} />} />
+
+          {/* Meal Form route (for adding a new meal or editing an existing one) */}
+          <Route path="/meals/:id" element={<MealForm darkMode={darkMode} />} />
+          <Route path="/meals/new" element={<MealForm darkMode={darkMode} />} />
 
           {/* Uncomment Register if needed */}
           {/* <Route path="/register" element={<Register darkMode={darkMode} />} /> */}

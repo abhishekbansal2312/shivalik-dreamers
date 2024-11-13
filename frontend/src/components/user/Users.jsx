@@ -5,7 +5,7 @@ import UserForm from "./UserForm";
 import UserList from "./UserList";
 import Modal from "../Modal";
 
-const Users = () => {
+const Users = ({ darkMode }) => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [formData, setFormData] = useState({
@@ -171,7 +171,7 @@ const Users = () => {
   // Loading state
   if (loading) {
     return (
-      <p className="min-h-screen flex justify-center items-center bg-white text-black">
+      <p className={`min-h-screen flex justify-center items-center ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
         Loading users...
       </p>
     );
@@ -182,7 +182,7 @@ const Users = () => {
     "bg-blue-500 hover:bg-blue-700 text-[12px] text-white font-normal py-2 px-4 rounded-md transition-colors duration-300";
 
   return (
-    <div className="px-16 py-8 bg-white text-black">
+    <div className={`${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'} px-16 py-8`}>
       <div className="flex flex-row sm:flex-row justify-between items-center max-w-full pb-4">
         <h2 className="text-lg sm:text-2xl font-semibold">Users Management</h2>
 
@@ -228,6 +228,7 @@ const Users = () => {
         users={currentUsers} // Use currentUsers for pagination
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        darkMode={darkMode} // Pass darkMode to UserList
       />
 
       {/* Pagination Controls */}
