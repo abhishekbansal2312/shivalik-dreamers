@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import mealsData from './sampleData.json';
-import { useAuth } from '../../provider/AuthProvider'; // Assuming you have an AuthContext for role-based checks
 
 const MealForm = ({ darkMode }) => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { user } = useAuth(); // Get the current user from the auth context
     const [meal, setMeal] = useState({
         name: '', description: '', category: [], ingredients: [], price: 0, caloric: 0, protein: 0, carbs: 0, fats: 0, allergens: [], image: '', available: true
     });
@@ -50,15 +48,9 @@ const MealForm = ({ darkMode }) => {
             console.log("New meal added:", meal);
         }
 
-        // Navigate back to the menu list
+        // Navigate back to menu list
         navigate('/menu');
     };
-
-    // Check if the user has the required role (admin or member)
-    if (user && !(user.role === 'admin' || user.role === 'member')) {
-        // If the user is not an admin or member, redirect to another page or show an error
-        return <div>You do not have permission to add meals.</div>; // Or use navigate to redirect
-    }
 
     return (
         <div className={`p-8 ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
@@ -214,7 +206,7 @@ const MealForm = ({ darkMode }) => {
 
                 <button 
                     type="submit" 
-                    className="w-full py-3 px-6 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                     {id ? 'Update Meal' : 'Add Meal'}
                 </button>

@@ -11,6 +11,7 @@ import MealList from "../src/components/order/MealList";
 import ProtectedRoute from "../src/components/ProtectedRoute";
 import ProtectedRouteAdminOnly from "../src/components/ProtectedRouteAdminOnly";
 import Review from "../src/pages/Review";
+import MealDetails from "./components/order/MealDetails";
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, darkMode, setDarkMode } =
@@ -79,6 +80,21 @@ const App = () => {
             }
           />
 
+
+          {/* Users route */}
+          <Route path="/users" element={<Users darkMode={darkMode} />} />
+
+
+          {/* Meal List route */}
+          <Route path="/menu" element={<MealList darkMode={darkMode} />} />
+
+          {/* Meal Form route (for adding a new meal or editing an existing one) */}
+          <Route path="/menu/:id" element={<MealDetails darkMode={darkMode} />} />
+          <Route path="/menu/new" element={<MealForm darkMode={darkMode} />} />
+
+          <Route path="/feedback" element={<Review darkMode={darkMode} />} />
+
+
           {/* Meal List route (protected) */}
           <Route
             path="/meals"
@@ -88,6 +104,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+
 
           {/* Meal Form route (protected) */}
           <Route
