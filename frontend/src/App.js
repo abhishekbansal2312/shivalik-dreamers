@@ -82,20 +82,58 @@ const App = () => {
           />
 
           {/* Meal List route */}
-          <Route path="/menu" element={<MealList darkMode={darkMode} />} />
+          <Route path="/meals" element={<MealList darkMode={darkMode} />} />
 
           {/* Meal Form route (for adding a new meal or editing an existing one) */}
-          <Route path="/menu/:id" element={<MealForm darkMode={darkMode} />} />
+          <Route path="/meals/new" element={<MealForm darkMode={darkMode} />} />
+          <Route path="/meals/:id" element={<MealForm darkMode={darkMode} />} />
 
           {/* Meal Details route */}
           <Route
-            path="/menu/details/:id"
+            path="/meals/details/:id"
             element={<MealDetails darkMode={darkMode} />}
           />
 
           {/* Review route */}
           <Route path="/feedback" element={<Review darkMode={darkMode} />} />
 
+          {/* Meal List route (protected) */}
+          <Route
+            path="/meals"
+            element={
+              <ProtectedRoute>
+                <MealList darkMode={darkMode} />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Meal Form route (protected) */}
+          <Route
+            path="/meals/:id"
+            element={
+              <ProtectedRoute>
+                <MealForm darkMode={darkMode} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/meals/new"
+            element={
+              <ProtectedRoute>
+                <MealForm darkMode={darkMode} />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Review route (protected) */}
+          <Route
+            path="/feedback"
+            element={
+              <ProtectedRoute>
+                <Review darkMode={darkMode} />
+              </ProtectedRoute>
+            }
+          />
           {/* Fallback route for 404 */}
           <Route path="*" element={<div>404 - Page Not Found</div>} />
         </Routes>
