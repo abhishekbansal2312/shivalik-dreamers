@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode"; // Ensure package is installed
-import { MenuIcon, XIcon } from "@heroicons/react/solid"; // For modern icons
+import { MenuIcon, XIcon } from "@heroicons/react/solid";
 import { useAuth } from "../provider/AuthProvider";
 
 const Navbar = ({ darkMode }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { isAuthenticated, setIsAuthenticated, userRole } = useAuth();
 
   useEffect(() => {
     const token = Cookies.get("authtoken");
@@ -37,11 +36,11 @@ const Navbar = ({ darkMode }) => {
     <nav
       className={`sticky top-0 left-0 right-0 z-50 ${
         darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
-      } shadow-lg transition-all duration-300 backdrop-blur-md`}
+      } shadow-md transition-all duration-300 backdrop-blur-md`}
     >
       <div className="container mx-auto flex justify-between items-center py-4 px-6 md:px-16">
         {/* Logo */}
-        <div className="font-bold text-2xl">
+        <div className="text-2xl">
           <Link
             to="/"
             className={`flex items-center space-x-2 ${
@@ -50,7 +49,7 @@ const Navbar = ({ darkMode }) => {
                 : "text-gray-900 hover:text-blue-500"
             } transition-all duration-300`}
           >
-            <span>Hobbies Club</span>
+            <span>HostelCafe</span>
           </Link>
         </div>
 
@@ -58,33 +57,85 @@ const Navbar = ({ darkMode }) => {
         <div className="hidden md:flex space-x-8 items-center">
           <Link
             to="/"
-            className={`transition-all duration-300 relative group ${
+            className={`transition-all duration-300 ${
               darkMode
                 ? "text-gray-300 hover:text-gray-400"
                 : "text-gray-900 hover:text-blue-500"
-            }`}
+            } text-lg`}
           >
             Home
           </Link>
-          {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className={`transition-all duration-300 relative group ${
+          <Link
+            to="/menu"
+            className={`transition-all duration-300 ${
+              darkMode
+                ? "text-gray-300 hover:text-gray-400"
+                : "text-gray-900 hover:text-blue-500"
+            } text-lg`}
+          >
+            Menu
+          </Link>
+          <Link
+            to="/orders"
+            className={`transition-all duration-300 ${
+              darkMode
+                ? "text-gray-300 hover:text-gray-400"
+                : "text-gray-900 hover:text-blue-500"
+            } text-lg`}
+          >
+            Orders
+          </Link>
+          <Link
+            to="/feedback"
+            className={`transition-all duration-300 ${
+              darkMode
+                ? "text-gray-300 hover:text-gray-400"
+                : "text-gray-900 hover:text-blue-500"
+            } text-lg`}
+          >
+            Feedback
+          </Link>
+          <Link
+            to="/profile"
+            className={`transition-all duration-300 ${
+              darkMode
+                ? "text-gray-300 hover:text-gray-400"
+                : "text-gray-900 hover:text-blue-500"
+            } text-lg`}
+          >
+            Profile
+          </Link>
+          {userRole === "admin" && (
+            <Link
+              to="/admin"
+              className={`transition-all duration-300 ${
                 darkMode
                   ? "text-gray-300 hover:text-red-400"
                   : "text-gray-900 hover:text-red-500"
-              }`}
+              } text-lg`}
+            >
+              Admin Panel
+            </Link>
+          )}
+          {isAuthenticated ? (
+            <button
+              onClick={handleLogout}
+              className={`transition-all duration-300 ${
+                darkMode
+                  ? "text-gray-300 hover:text-red-400"
+                  : "text-gray-900 hover:text-red-500"
+              } text-lg`}
             >
               Logout
             </button>
           ) : (
             <Link
               to="/login"
-              className={`transition-all duration-300 relative group ${
+              className={`transition-all duration-300 ${
                 darkMode
                   ? "text-gray-300 hover:text-gray-400"
                   : "text-gray-900 hover:text-blue-500"
-              }`}
+              } text-lg`}
             >
               Login
             </Link>
@@ -116,33 +167,85 @@ const Navbar = ({ darkMode }) => {
       >
         <Link
           to="/"
-          className={`block px-4 py-2 transition-all duration-300 ${
+          className={`block px-6 py-4 transition-all duration-300 ${
             darkMode
               ? "text-gray-300 hover:bg-gray-700"
               : "text-gray-900 hover:bg-gray-100"
-          }`}
+          } text-lg`}
         >
           Home
         </Link>
-        {isAuthenticated ? (
-          <button
-            onClick={handleLogout}
-            className={`block px-4 py-2 transition-all duration-300 ${
+        <Link
+          to="/menu"
+          className={`block px-6 py-4 transition-all duration-300 ${
+            darkMode
+              ? "text-gray-300 hover:bg-gray-700"
+              : "text-gray-900 hover:bg-gray-100"
+          } text-lg`}
+        >
+          Menu
+        </Link>
+        <Link
+          to="/orders"
+          className={`block px-6 py-4 transition-all duration-300 ${
+            darkMode
+              ? "text-gray-300 hover:bg-gray-700"
+              : "text-gray-900 hover:bg-gray-100"
+          } text-lg`}
+        >
+          Orders
+        </Link>
+        <Link
+          to="/feedback"
+          className={`block px-6 py-4 transition-all duration-300 ${
+            darkMode
+              ? "text-gray-300 hover:bg-gray-700"
+              : "text-gray-900 hover:bg-gray-100"
+          } text-lg`}
+        >
+          Feedback
+        </Link>
+        <Link
+          to="/profile"
+          className={`block px-6 py-4 transition-all duration-300 ${
+            darkMode
+              ? "text-gray-300 hover:bg-gray-700"
+              : "text-gray-900 hover:bg-gray-100"
+          } text-lg`}
+        >
+          Profile
+        </Link>
+        {userRole === "admin" && (
+          <Link
+            to="/admin"
+            className={`block px-6 py-4 transition-all duration-300 ${
               darkMode
                 ? "text-gray-300 hover:bg-red-400"
                 : "text-gray-900 hover:bg-red-200"
-            }`}
+            } text-lg`}
+          >
+            Admin Panel
+          </Link>
+        )}
+        {isAuthenticated ? (
+          <button
+            onClick={handleLogout}
+            className={`block px-6 py-4 transition-all duration-300 w-full text-left ${
+              darkMode
+                ? "text-gray-300 hover:bg-red-400"
+                : "text-gray-900 hover:bg-red-200"
+            } text-lg`}
           >
             Logout
           </button>
         ) : (
           <Link
             to="/login"
-            className={`block px-4 py-2 transition-all duration-300 ${
+            className={`block px-6 py-4 transition-all duration-300 ${
               darkMode
                 ? "text-gray-300 hover:bg-gray-700"
                 : "text-gray-900 hover:bg-gray-100"
-            }`}
+            } text-lg`}
           >
             Login
           </Link>
