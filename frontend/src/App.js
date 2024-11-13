@@ -1,9 +1,8 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import Header from "../src/components/Header"; // Ensure this path is correct
+import Header from "../src/components/Header";
 import Home from "../src/pages/Home";
 import Login from "../src/pages/Login";
-// import Register from "../src/pages/Register";
-import { useAuth } from "../src/provider/AuthProvider"; // Ensure the path is correct
+import { useAuth } from "../src/provider/AuthProvider";
 import "./index.css";
 import Users from "../src/components/user/Users";
 import ProfilePage from "./pages/Profile";
@@ -12,9 +11,10 @@ import MealForm from "./components/order/CreateMeal"; // Add this line
 import MealList from "../src/components/order/MealList"; // Add this line
 
 import Review from "../src/pages/Review";
+import ProtectedRoute from "../src/components/ProtectedRoute";
+import ProtectedRouteAdminOnly from "../src/components/ProtectedRouteAdminOnly";
 
 const App = () => {
-  // Call useAuth and destructure values from it
   const { isAuthenticated, setIsAuthenticated, darkMode, setDarkMode } =
     useAuth();
   const location = useLocation();
@@ -60,20 +60,26 @@ const App = () => {
               />
             }
           />
+
           {/* Profile route (protected) */}
           <Route
             path="/profile"
             element={
-              isAuthenticated ? (
+              <ProtectedRoute>
                 <ProfilePage darkMode={darkMode} />
-              ) : (
-                <Navigate to="/login" replace />
-              )
+              </ProtectedRoute>
             }
           />
 
-          {/* Users route */}
-          <Route path="/users" element={<Users darkMode={darkMode} />} />
+          {/* Users route (admin-only protected) */}
+          <Route
+            path="/users"
+            element={
+              <ProtectedRouteAdminOnly>
+                <Users darkMode={darkMode} />
+              </ProtectedRouteAdminOnly>
+            }
+          />
 
           {/* Meal List route */}
           <Route path="/menu" element={<MealList darkMode={darkMode} />} />
@@ -81,22 +87,14 @@ const App = () => {
           {/* Meal Form route (for adding a new meal or editing an existing one) */}
           <Route path="/menu/:id" element={<MealForm darkMode={darkMode} />} />
 
+          {/* Meal Details route */}
+          <Route
+            path="/menu/details/:id"
+            element={<MealDetails darkMode={darkMode} />}
+          />
+
+          {/* Review route */}
           <Route path="/feedback" element={<Review darkMode={darkMode} />} />
-
-          {/* Uncomment Register if needed */}
-          {/* <Route path="/register" element={<Register darkMode={darkMode} />} /> */}
-
-          {/* Protected routes example (uncomment if using) */}
-          {/* <Route
-            path="/protected"
-            element={
-              isAuthenticated ? (
-                <ProtectedComponent />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          /> */}
 
           {/* Fallback route for 404 */}
           <Route path="*" element={<div>404 - Page Not Found</div>} />

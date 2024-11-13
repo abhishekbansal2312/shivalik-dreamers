@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { toast } from "react-hot-toast"; // Import toast
+import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 import MealCard from "./MealCard";
 import CreateMeal from "./CreateMeal";
 import UpdateMealForm from "./UpdateMealForm";
 import Modal from "../Modal";
+import { useAuth } from "../../provider/AuthProvider"; // Assuming you have an AuthContext for user info
 
 const MealList = ({ darkMode }) => {
   const [meals, setMeals] = useState([]);
@@ -13,6 +15,7 @@ const MealList = ({ darkMode }) => {
   const [showCreateMeal, setShowCreateMeal] = useState(false);
   const [showEditMeal, setShowEditMeal] = useState(false);
   const [editingMeal, setEditingMeal] = useState(null);
+  const { user } = useAuth(); // Access the logged-in user from context
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -98,8 +101,15 @@ const MealList = ({ darkMode }) => {
     );
   }
 
+  // Check if the user is either an admin or cafeteria member
+  const canAddMeal = user && (user.role === "admin" || user.role === "member");
+
   return (
-    <div className="px-16 py-8 dark:bg-gray-900 dark:text-white bg-white text-black">
+    <div
+      className={`px-16 py-8 ${
+        darkMode ? "dark:bg-gray-900 dark:text-white" : "bg-white text-black"
+      }`}
+    >
       <div className="min-h-screen transition duration-500">
         {/* Meal List Section */}
         <div className="flex justify-between items-center mb-4">
@@ -135,7 +145,7 @@ const MealList = ({ darkMode }) => {
             meal={editingMeal}
             onCancel={() => setEditingMeal(null)}
             setMeals={setMeals}
-            darkMode={true}
+            darkMode={darkMode}
           />
         </Modal>
 
