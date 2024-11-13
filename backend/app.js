@@ -43,11 +43,13 @@ app.get("/", (req, res) => {
 const authRoutes = require("./routes/authRoutes.js");
 const userRoutes = require("./routes/userRoutes");
 const reviewRoutes = require("./routes/reviewRoutes.js");
+const foodRoutes = require("./routes/foodRoutes");
 
 // Use routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/foods", foodRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
