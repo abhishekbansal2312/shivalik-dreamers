@@ -6,6 +6,7 @@ import Login from "../src/pages/Login";
 import { useAuth } from "../src/provider/AuthProvider"; // Ensure the path is correct
 import "./index.css";
 import Users from "../src/components/user/Users";
+import ProfilePage from "./pages/Profile";
 
 import MealForm from "../src/components/order/MealForm"; // Add this line
 import MealList from "../src/components/order/MealList"; // Add this line
@@ -60,6 +61,18 @@ const App = () => {
               />
             }
           />
+          {/* Profile route (protected) */}
+          <Route
+            path="/profile"
+            element={
+              isAuthenticated ? (
+                <ProfilePage darkMode={darkMode} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+
 
           {/* Users route */}
           <Route path="/users" element={<Users darkMode={darkMode} />} />
