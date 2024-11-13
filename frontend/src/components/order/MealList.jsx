@@ -1,42 +1,177 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import mealsData from './sampleData.json';
-import { useAuth } from '../../provider/AuthProvider'; // Assuming you have an AuthContext for user info
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
+import MealCard from "./MealCard";
+import CreateMeal from "./CreateMeal";
+import UpdateMealForm from "./UpdateMealForm";
+import Modal from "../Modal";
+import { useAuth } from "../../provider/AuthProvider"; // Assuming you have an AuthContext for user info
 
-const MealsList = ({ darkMode }) => {
-    const [meals, setMeals] = useState([]);
-    const { user } = useAuth(); // Access the logged-in user from context
+const MealList = ({ darkMode }) => {
+  const [meals, setMeals] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showCreateMeal, setShowCreateMeal] = useState(false);
+  const [showEditMeal, setShowEditMeal] = useState(false);
+  const [editingMeal, setEditingMeal] = useState(null);
+  const { user } = useAuth(); // Access the logged-in user from context
+  const [isAdmin, setIsAdmin] = useState(false);
 
-    useEffect(() => {
-        // Set the imported JSON data as the initial state
-        setMeals(mealsData);
-    }, []);
+  useEffect(() => {
+    const fetchMeals = async () => {
+      try {
+        const token = Cookies.get("authtoken");
 
-    // Check if the user is either an admin or cafeteria member
-    const canAddMeal = user && (user.role === 'admin' || user.role === 'member');
+        if (!token) {
+          console.error("No token found. Redirecting to login page...");
+          toast.error("No token found. Redirecting to login page...");
+          window.location.href = "/login";
+          return;
+        }
 
-    return (
-        <div className={`p-6 ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
-            <h1 className="text-2xl mb-4">Meals</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {meals.map((meal) => (
-                    <div key={meal._id} className="border p-4 rounded shadow-md">
-                        <img src={meal.image} alt={meal.name} className="w-full h-48 object-cover rounded" />
-                        <h2 className="text-xl mt-2">{meal.name}</h2>
-                        <p className="text-sm">{meal.description}</p>
-                        <p className="text-lg font-bold mt-2">${meal.price}</p>
-                        <Link to={`/menu/${meal._id}`} className="text-blue-500 hover:underline mt-2 block">View Details</Link>
-                    </div>
-                ))}
-            </div>
+        const decodedToken = jwtDecode(token);
+        setIsAdmin(decodedToken.role === "admin");
 
-            {canAddMeal && (
-                <Link to="/menu/add" className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">
-                    Add New Meal
-                </Link>
-            )}
-        </div>
+        // Fetch meals from the backend
+        const mealsResponse = await fetch("http://localhost:4600/api/meals", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        });
+
+        if (!mealsResponse.ok) throw new Error("Failed to fetch meals");
+
+        const mealsData = await mealsResponse.json();
+
+        const sortedMeals = mealsData.sort(
+          (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
+        );
+
+        setMeals(sortedMeals);
+      } catch (err) {
+        toast.error(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMeals();
+  }, []);
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      try {
+        const token = Cookies.get("authtoken");
+        const response = await fetch(`http://localhost:4600/api/meals/${id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to delete item");
+        }
+
+        setMeals((prev) => prev.filter((meal) => meal._id !== id));
+        toast.success("Item deleted successfully!");
+      } catch (err) {
+        toast.error(err.message);
+      }
+    }
+  };
+
+  const handleUpdateMeal = (updatedMeal) => {
+    setMeals((prevMeals) =>
+      prevMeals.map((meal) =>
+        meal._id === updatedMeal._id ? updatedMeal : meal
+      )
     );
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader"></div> {/* Add loader animation */}
+      </div>
+    );
+  }
+
+  // Check if the user is either an admin or cafeteria member
+  const canAddMeal = user && (user.role === "admin" || user.role === "member");
+
+  return (
+    <div
+      className={`px-16 py-8 ${
+        darkMode ? "dark:bg-gray-900 dark:text-white" : "bg-white text-black"
+      }`}
+    >
+      <div className="min-h-screen transition duration-500">
+        {/* Meal List Section */}
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Meal List</h2>
+          {isAdmin && (
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-[12px] text-white font-normal py-2 px-4 rounded-md transition-colors duration-300"
+              onClick={() => setShowCreateMeal(true)}
+            >
+              Add Meal
+            </button>
+          )}
+        </div>
+
+        <Modal
+          isOpen={showCreateMeal}
+          title={"Add Meal"}
+          onClose={() => setShowCreateMeal(false)}
+        >
+          <CreateMeal
+            setMeals={setMeals}
+            onClose={() => setShowCreateMeal(false)}
+            darkMode={darkMode}
+          />
+        </Modal>
+
+        <Modal
+          isOpen={showEditMeal}
+          title={"Edit Meal"}
+          onClose={() => setShowEditMeal(false)}
+        >
+          <UpdateMealForm
+            meal={editingMeal}
+            onCancel={() => setEditingMeal(null)}
+            setMeals={setMeals}
+            darkMode={darkMode}
+          />
+        </Modal>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {meals.length === 0 ? (
+            <p>No meals found.</p>
+          ) : (
+            meals.map((meal) => {
+              if (!meal || !meal._id) return null; // Add a check for valid meal and _id
+
+              return (
+                <MealCard
+                  key={meal._id}
+                  meal={meal}
+                  darkMode={darkMode}
+                  isAdmin={isAdmin}
+                  onDelete={() => handleDelete(meal._id)}
+                  onEdit={() => setEditingMeal(meal)}
+                />
+              );
+            })
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default MealsList;
+export default MealList;

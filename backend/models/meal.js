@@ -8,7 +8,7 @@ const MealSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+    // required: true,
   },
   category: {
     type: [String], // Categories as an array of strings, admin can add categories

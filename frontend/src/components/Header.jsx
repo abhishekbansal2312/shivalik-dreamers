@@ -5,16 +5,12 @@ import { MenuIcon, XIcon } from "@heroicons/react/solid";
 import { SunIcon, MoonIcon } from "@heroicons/react/outline";
 
 import { useAuth } from "../provider/AuthProvider";
-
-import { jwtDecode } from "jwt-decode"; // Fix: Correct import for jwt-decode
-
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = ({ darkMode, setDarkMode }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
-
   const location = useLocation(); // Get the current route
   const { isAuthenticated, setIsAuthenticated, userRole } = useAuth();
 
@@ -95,24 +91,13 @@ const Navbar = ({ darkMode, setDarkMode }) => {
             Home
           </Link>
 
-          <Link
-            to="/users"
-            className={`transition-all duration-300 ${
-              isActive("/users")
-                ? "border-b-2 border-blue-500"
-                : darkMode
-                ? "text-gray-300 hover:text-gray-400"
-                : "text-gray-900 hover:text-blue-500"
-            } text-lg`}
-          >
-            Users
-          </Link>
-
           {isAdmin && (
             <Link
               to="/users"
               className={`transition-all duration-300 ${
-                darkMode
+                isActive("/users")
+                  ? "border-b-2 border-blue-500"
+                  : darkMode
                   ? "text-gray-300 hover:text-gray-400"
                   : "text-gray-900 hover:text-blue-500"
               } text-lg`}
@@ -133,6 +118,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           >
             Menu
           </Link>
+
           <Link
             to="/orders"
             className={`transition-all duration-300 ${
@@ -145,6 +131,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           >
             Orders
           </Link>
+
           <Link
             to="/feedback"
             className={`transition-all duration-300 ${
@@ -157,32 +144,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           >
             Feedback
           </Link>
-          <Link
-            to="/profile"
-            className={`transition-all duration-300 ${
-              isActive("/profile")
-                ? "border-b-2 border-blue-500"
-                : darkMode
-                ? "text-gray-300 hover:text-gray-400"
-                : "text-gray-900 hover:text-blue-500"
-            } text-lg`}
-          >
-            Profile
-          </Link>
-          {isAdmin && (
-            <Link
-              to="/admin"
-              className={`transition-all duration-300 ${
-                isActive("/admin")
-                  ? "border-b-2 border-red-500"
-                  : darkMode
-                  ? "text-gray-300 hover:text-red-400"
-                  : "text-gray-900 hover:text-red-500"
-              } text-lg`}
-            >
-              Admin Panel
-            </Link>
-          )}
+
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
@@ -241,22 +203,96 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           isDropdownOpen ? "block" : "hidden"
         } ${darkMode ? "bg-gray-800" : "bg-white"} shadow-lg`}
       >
-
         <Link
           to="/"
           className={`block px-6 py-4 transition-all duration-300 ${
-            isActive("/") ? "bg-blue-500 text-white" : darkMode
-            ? "text-gray-300 hover:bg-gray-700"
-            : "text-gray-900 hover:bg-gray-100"
+            isActive("/")
+              ? "bg-blue-500 text-white"
+              : darkMode
+              ? "text-gray-300 hover:bg-gray-700"
+              : "text-gray-900 hover:bg-gray-100"
           } text-lg`}
         >
           Home
         </Link>
-        {/* Repeat for other links, similar to the Desktop Menu */}
 
-        {/* Add links similar to the desktop menu for the dropdown */}
-        {/* ... */}
+        {isAdmin && (
+          <Link
+            to="/users"
+            className={`block px-6 py-4 transition-all duration-300 ${
+              isActive("/users")
+                ? "bg-blue-500 text-white"
+                : darkMode
+                ? "text-gray-300 hover:bg-gray-700"
+                : "text-gray-900 hover:bg-gray-100"
+            } text-lg`}
+          >
+            Users
+          </Link>
+        )}
 
+        <Link
+          to="/menu"
+          className={`block px-6 py-4 transition-all duration-300 ${
+            isActive("/menu")
+              ? "bg-blue-500 text-white"
+              : darkMode
+              ? "text-gray-300 hover:bg-gray-700"
+              : "text-gray-900 hover:bg-gray-100"
+          } text-lg`}
+        >
+          Menu
+        </Link>
+
+        <Link
+          to="/orders"
+          className={`block px-6 py-4 transition-all duration-300 ${
+            isActive("/orders")
+              ? "bg-blue-500 text-white"
+              : darkMode
+              ? "text-gray-300 hover:bg-gray-700"
+              : "text-gray-900 hover:bg-gray-100"
+          } text-lg`}
+        >
+          Orders
+        </Link>
+
+        <Link
+          to="/feedback"
+          className={`block px-6 py-4 transition-all duration-300 ${
+            isActive("/feedback")
+              ? "bg-blue-500 text-white"
+              : darkMode
+              ? "text-gray-300 hover:bg-gray-700"
+              : "text-gray-900 hover:bg-gray-100"
+          } text-lg`}
+        >
+          Feedback
+        </Link>
+
+        {isAuthenticated ? (
+          <button
+            onClick={handleLogout}
+            className={`block px-6 py-4 transition-all duration-300 ${
+              darkMode
+                ? "text-gray-300 hover:text-red-400"
+                : "text-gray-900 hover:text-red-500"
+            } text-lg`}
+          >
+            Logout
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className={`block px-6 py-4 transition-all duration-300 ${
+              darkMode
+                ? "text-gray-300 hover:text-gray-400"
+                : "text-gray-900 hover:text-blue-500"
+            } text-lg`}
+          >
+            Login
+          </Link>
+        )}
       </div>
     </nav>
   );
