@@ -12,6 +12,7 @@ import MealForm from "../src/components/order/MealForm"; // Add this line
 import MealList from "../src/components/order/MealList"; // Add this line
 
 import Review from "../src/pages/Review";
+import MealDetails from "./components/order/MealDetails";
 
 
 const App = () => {
@@ -79,11 +80,11 @@ const App = () => {
 
 
           {/* Meal List route */}
-          <Route path="/meals" element={<MealList darkMode={darkMode} />} />
+          <Route path="/menu" element={<MealList darkMode={darkMode} />} />
 
           {/* Meal Form route (for adding a new meal or editing an existing one) */}
-          <Route path="/meals/:id" element={<MealForm darkMode={darkMode} />} />
-          <Route path="/meals/new" element={<MealForm darkMode={darkMode} />} />
+          <Route path="/menu/:id" element={<MealDetails darkMode={darkMode} />} />
+          <Route path="/menu/new" element={<MealForm darkMode={darkMode} />} />
 
           <Route path="/feedback" element={<Review darkMode={darkMode} />} />
 
