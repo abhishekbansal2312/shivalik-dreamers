@@ -9,7 +9,7 @@ const app = express();
 
 // MongoDB connection
 const MongoDB = process.env.MONGO_URL;
-
+ 
 mongoose
   .connect(MongoDB) // Improved options for mongoose connection
   .then(() => {
