@@ -1,0 +1,56 @@
+[
+    {
+        "_id": "meal1",
+        "name": "Chicken Salad",
+        "description": "A fresh salad with grilled chicken, vegetables, and a light dressing.",
+        "category": [
+            "Salad",
+            "Healthy"
+        ],
+        "ingredients": [
+            "Chicken",
+            "Lettuce",
+            "Tomatoes",
+            "Cucumbers"
+        ],
+        "price": 8.99,
+        "caloric": 250,
+        "protein": 20,
+        "carbs": 15,
+        "fats": 10,
+        "allergens": [
+            "Chicken"
+        ],
+        "image": "https://example.com/chicken-salad.jpg",
+        "available": true,
+        "createdAt": "2024-11-10T12:00:00Z",
+        "updatedAt": "2024-11-10T12:00:00Z"
+    },
+    {
+        "_id": "meal2",
+        "name": "Vegetable Stir Fry",
+        "description": "A mix of vegetables stir-fried with a savory sauce.",
+        "category": [
+            "Vegetarian",
+            "Main Course"
+        ],
+        "ingredients": [
+            "Bell Pepper",
+            "Broccoli",
+            "Carrot",
+            "Soy Sauce"
+        ],
+        "price": 10.99,
+        "caloric": 300,
+        "protein": 10,
+        "carbs": 40,
+        "fats": 5,
+        "allergens": [
+            "Soy"
+        ],
+        "image": "https://example.com/veg-stir-fry.jpg",
+        "available": true,
+        "createdAt": "2024-11-11T12:00:00Z",
+        "updatedAt": "2024-11-11T12:00:00Z"
+    }
+]
