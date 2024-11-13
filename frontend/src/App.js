@@ -4,6 +4,7 @@ import Home from "../src/pages/Home";
 import Login from "../src/pages/Login";
 // import Register from "../src/pages/Register";
 import { useAuth } from "../src/provider/AuthProvider"; // Ensure the path is correct
+import './index.css';
 
 const App = () => {
   // Call useAuth and destructure values from it
