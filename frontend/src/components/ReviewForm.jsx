@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
 
-const ReviewForm = ({ onSubmit, error, darkMode }) => {
+const ReviewForm = ({ onSubmit, error, darkMode, className }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [emoji, setEmoji] = useState("");
@@ -58,20 +58,20 @@ const ReviewForm = ({ onSubmit, error, darkMode }) => {
 
   return (
     <div
-      className={`p-8 rounded-lg max-w-xl shadow-lg ${
+      className={`p-6 rounded-lg shadow-lg flex flex-col justify-center items-start text-left transition-all duration-300 ${
         darkMode ? "bg-gray-900" : "bg-white"
-      } transition-all duration-300`}
+      } ${className}`} // Accepting className prop to pass from parent
     >
       <h3
-        className={`text-3xl font-bold text-center mb-6 ${
+        className={`text-3xl font-bold text-left mb-6 ${
           darkMode ? "text-white" : "text-gray-800"
         }`}
       >
         Share Your Experience
       </h3>
 
-      <div className="flex items-center mb-4">
-        <div className="flex">{renderStars()}</div>
+      <div className="flex items-center mb-4 w-full">
+        <div className="flex w-full">{renderStars()}</div>
         {emoji && (
           <div className="text-6xl ml-4 transition-transform transform hover:scale-110">
             {emoji}
@@ -79,8 +79,8 @@ const ReviewForm = ({ onSubmit, error, darkMode }) => {
         )}
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
+      <form onSubmit={handleSubmit} className="space-y-6 w-full">
+        <div className="w-full">
           <label
             htmlFor="comment"
             className={`block text-sm font-medium mb-2 ${
@@ -116,7 +116,7 @@ const ReviewForm = ({ onSubmit, error, darkMode }) => {
         </button>
       </form>
 
-      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+      {error && <p className="text-red-500 text-left mt-4">{error}</p>}
     </div>
   );
 };
