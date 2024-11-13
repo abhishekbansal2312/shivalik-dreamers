@@ -49,7 +49,7 @@ const foodRoutes = require("./routes/foodRoutes");
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/reviews", reviewRoutes);
-app.use("/api/foods", foodRoutes);
+app.use("/api/meals", foodRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

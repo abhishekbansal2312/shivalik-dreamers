@@ -3,7 +3,20 @@ const Meal = require("../models/meal"); // Import the Meal model
 // Create a new meal (food item)
 const createMeal = async (req, res) => {
   try {
-    const { name, description, category, ingredients, price, caloric, protein, carbs, fats, allergens, image } = req.body;
+    const {
+      name,
+      description,
+      category,
+      ingredients,
+      price,
+      caloric,
+      protein,
+      carbs,
+      fats,
+      allergens,
+      image,
+      available,
+    } = req.body;
 
     // Create the new meal
     const newMeal = new Meal({
@@ -18,13 +31,16 @@ const createMeal = async (req, res) => {
       fats,
       allergens,
       image,
+      available: available || false, // Ensure availability is boolean
     });
 
     await newMeal.save();
     res.status(201).json(newMeal);
   } catch (err) {
     console.error("Error creating meal:", err);
-    res.status(500).json({ message: "Error creating meal", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error creating meal", error: err.message });
   }
 };
 
@@ -35,7 +51,9 @@ const getAllMeals = async (req, res) => {
     res.status(200).json(meals);
   } catch (err) {
     console.error("Error fetching meals:", err);
-    res.status(500).json({ message: "Error fetching meals", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching meals", error: err.message });
   }
 };
 
@@ -49,21 +67,27 @@ const getMealById = async (req, res) => {
     res.status(200).json(meal);
   } catch (err) {
     console.error("Error fetching meal:", err);
-    res.status(500).json({ message: "Error fetching meal", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching meal", error: err.message });
   }
 };
 
 // Update a meal by ID
 const updateMeal = async (req, res) => {
   try {
-    const updatedMeal = await Meal.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedMeal = await Meal.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!updatedMeal) {
       return res.status(404).json({ message: "Meal not found" });
     }
     res.status(200).json(updatedMeal);
   } catch (err) {
     console.error("Error updating meal:", err);
-    res.status(500).json({ message: "Error updating meal", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error updating meal", error: err.message });
   }
 };
 
@@ -77,7 +101,9 @@ const deleteMeal = async (req, res) => {
     res.status(200).json({ message: "Meal deleted successfully" });
   } catch (err) {
     console.error("Error deleting meal:", err);
-    res.status(500).json({ message: "Error deleting meal", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error deleting meal", error: err.message });
   }
 };
 
