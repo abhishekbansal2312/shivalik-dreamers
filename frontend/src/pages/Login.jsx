@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie"; // Import js-cookie to manage cookies
+import Cookies from "js-cookie";
 import { useAuth } from "../provider/AuthProvider";
 
 const Login = ({ darkMode }) => {
@@ -29,11 +29,9 @@ const Login = ({ darkMode }) => {
     try {
       const response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ studentId, password }),
-        credentials: "include", // Include credentials to handle cookies
+        credentials: "include",
         signal: controller.signal,
       });
 
@@ -45,13 +43,9 @@ const Login = ({ darkMode }) => {
       }
 
       const data = await response.json();
-      console.log(data);
-
-      // Set the cookie (though the token will expire in 1 minute)
-      Cookies.set("authtoken", data.token, { expires: 7, path: "" }); // Still sets the cookie for 7 days, but JWT will expire in 1 minute
+      Cookies.set("authtoken", data.token, { expires: 7, path: "" });
       setIsAuthenticated(true);
-
-      navigate("/"); // Redirect to home page on successful login
+      navigate("/");
     } catch (err) {
       setLoading(false);
       if (err.name === "AbortError") {
@@ -64,26 +58,27 @@ const Login = ({ darkMode }) => {
 
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-800 dark:to-purple-800">
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-[#1e3c72] to-[#2a5298] dark:from-[#1f2937] dark:to-[#4b5563] px-4 sm:px-8 lg:px-16">
         {/* Back/Home Button */}
         <Link
           to="/"
-          className="absolute top-4 left-4 bg-white dark:bg-gray-800 text-gray-800 dark:text-white p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shadow-md"
+          className="absolute top-6 left-6 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white p-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-700 transition-all shadow-md"
           title="Back to Home"
         >
-          &#8592; {/* Back Arrow */} Home
+          &#8592; Home
         </Link>
-        <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md relative overflow-hidden border border-gray-300 dark:border-gray-600">
-          <h2 className="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+
+        <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-xl w-full max-w-md relative overflow-hidden border border-gray-200 dark:border-gray-700">
+          <h2 className="text-2xl md:text-3xl font-extrabold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
             Welcome Back!
           </h2>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="mb-5">
               <label
                 htmlFor="studentId"
-                className="block text-gray-700 dark:text-gray-300 font-semibold mb-2"
+                className="block text-gray-700 dark:text-gray-300 font-semibold mb-1"
               >
-                Student ID:
+                Student ID
               </label>
               <input
                 type="text"
@@ -91,16 +86,17 @@ const Login = ({ darkMode }) => {
                 onChange={(e) => setStudentId(e.target.value)}
                 id="studentId"
                 placeholder="Enter 9-digit student ID"
-                className="w-full p-3 border text-black border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow duration-200 shadow-sm hover:shadow-lg"
                 required
               />
             </div>
+
             <div className="mb-6">
               <label
                 htmlFor="password"
-                className="block text-gray-700 dark:text-gray-300 font-semibold mb-2"
+                className="block text-gray-700 dark:text-gray-300 font-semibold mb-1"
               >
-                Password:
+                Password
               </label>
               <input
                 type="password"
@@ -108,33 +104,26 @@ const Login = ({ darkMode }) => {
                 onChange={(e) => setPassword(e.target.value)}
                 id="password"
                 placeholder="Enter your password"
-                className="w-full p-3 border text-black border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 ease-in-out shadow-sm hover:shadow-md"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow duration-200 shadow-sm hover:shadow-lg"
                 required
               />
             </div>
+
             <button
               type="submit"
-              className={`w-full bg-gradient-to-r from-indigo-500 to-blue-600 text-white p-3 rounded-md hover:from-indigo-600 hover:to-blue-700 transition-colors font-semibold ${
-                loading ? "opacity-50 cursor-not-allowed" : ""
+              className={`w-full py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-blue-600 text-white font-bold shadow-lg hover:from-indigo-600 hover:to-blue-700 transition duration-200 ${
+                loading ? "opacity-60 cursor-not-allowed" : ""
               }`}
               disabled={loading}
             >
               {loading ? "Logging in..." : "Login"}
             </button>
+
             {error && (
-              <p className="mt-4 text-red-600 dark:text-red-400 text-center">
+              <p className="mt-5 text-red-600 dark:text-red-400 text-center">
                 {error}
               </p>
             )}
-            <p className="mt-4 text-center text-gray-600 dark:text-gray-300">
-              Forget Password?{" "}
-              <Link
-                to="/auth/forgot-password"
-                className="text-indigo-500 hover:underline"
-              >
-                Click Here
-              </Link>
-            </p>
           </form>
         </div>
       </div>
