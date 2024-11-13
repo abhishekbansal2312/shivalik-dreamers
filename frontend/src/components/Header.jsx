@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
 import { SunIcon, MoonIcon } from "@heroicons/react/outline";
+
+import { useAuth } from "../provider/AuthProvider";
+
 import { jwtDecode } from "jwt-decode"; // Fix: Correct import for jwt-decode
+
 
 const Navbar = ({ darkMode, setDarkMode }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+
+  const location = useLocation(); // Get the current route
+  const { isAuthenticated, setIsAuthenticated, userRole } = useAuth();
 
   useEffect(() => {
     const token = Cookies.get("authtoken");
@@ -51,6 +58,9 @@ const Navbar = ({ darkMode, setDarkMode }) => {
     setDarkMode((prev) => !prev);
   };
 
+  // Function to check if the link is active
+  const isActive = (path) => location.pathname === path;
+
   return (
     <nav
       className={`sticky top-0 left-0 right-0 z-50 ${
@@ -75,13 +85,29 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           <Link
             to="/"
             className={`transition-all duration-300 ${
-              darkMode
+              isActive("/")
+                ? "border-b-2 border-blue-500"
+                : darkMode
                 ? "text-gray-300 hover:text-gray-400"
                 : "text-gray-900 hover:text-blue-500"
             } text-lg`}
           >
             Home
           </Link>
+
+          <Link
+            to="/users"
+            className={`transition-all duration-300 ${
+              isActive("/users")
+                ? "border-b-2 border-blue-500"
+                : darkMode
+                ? "text-gray-300 hover:text-gray-400"
+                : "text-gray-900 hover:text-blue-500"
+            } text-lg`}
+          >
+            Users
+          </Link>
+
           {isAdmin && (
             <Link
               to="/users"
@@ -94,10 +120,13 @@ const Navbar = ({ darkMode, setDarkMode }) => {
               Users
             </Link>
           )}
+
           <Link
             to="/menu"
             className={`transition-all duration-300 ${
-              darkMode
+              isActive("/menu")
+                ? "border-b-2 border-blue-500"
+                : darkMode
                 ? "text-gray-300 hover:text-gray-400"
                 : "text-gray-900 hover:text-blue-500"
             } text-lg`}
@@ -107,7 +136,9 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           <Link
             to="/orders"
             className={`transition-all duration-300 ${
-              darkMode
+              isActive("/orders")
+                ? "border-b-2 border-blue-500"
+                : darkMode
                 ? "text-gray-300 hover:text-gray-400"
                 : "text-gray-900 hover:text-blue-500"
             } text-lg`}
@@ -117,7 +148,9 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           <Link
             to="/feedback"
             className={`transition-all duration-300 ${
-              darkMode
+              isActive("/feedback")
+                ? "border-b-2 border-blue-500"
+                : darkMode
                 ? "text-gray-300 hover:text-gray-400"
                 : "text-gray-900 hover:text-blue-500"
             } text-lg`}
@@ -127,7 +160,9 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           <Link
             to="/profile"
             className={`transition-all duration-300 ${
-              darkMode
+              isActive("/profile")
+                ? "border-b-2 border-blue-500"
+                : darkMode
                 ? "text-gray-300 hover:text-gray-400"
                 : "text-gray-900 hover:text-blue-500"
             } text-lg`}
@@ -138,7 +173,9 @@ const Navbar = ({ darkMode, setDarkMode }) => {
             <Link
               to="/admin"
               className={`transition-all duration-300 ${
-                darkMode
+                isActive("/admin")
+                  ? "border-b-2 border-red-500"
+                  : darkMode
                   ? "text-gray-300 hover:text-red-400"
                   : "text-gray-900 hover:text-red-500"
               } text-lg`}
@@ -204,8 +241,22 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           isDropdownOpen ? "block" : "hidden"
         } ${darkMode ? "bg-gray-800" : "bg-white"} shadow-lg`}
       >
+
+        <Link
+          to="/"
+          className={`block px-6 py-4 transition-all duration-300 ${
+            isActive("/") ? "bg-blue-500 text-white" : darkMode
+            ? "text-gray-300 hover:bg-gray-700"
+            : "text-gray-900 hover:bg-gray-100"
+          } text-lg`}
+        >
+          Home
+        </Link>
+        {/* Repeat for other links, similar to the Desktop Menu */}
+
         {/* Add links similar to the desktop menu for the dropdown */}
         {/* ... */}
+
       </div>
     </nav>
   );
