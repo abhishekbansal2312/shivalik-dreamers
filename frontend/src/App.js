@@ -6,6 +6,7 @@ import Login from "../src/pages/Login";
 import { useAuth } from "../src/provider/AuthProvider"; // Ensure the path is correct
 import "./index.css";
 import Users from "../src/components/user/Users";
+import ProfilePage from "./pages/Profile";
 
 const App = () => {
   // Call useAuth and destructure values from it
@@ -54,6 +55,18 @@ const App = () => {
               />
             }
           />
+          {/* Profile route (protected) */}
+          <Route
+            path="/profile"
+            element={
+              isAuthenticated ? (
+                <ProfilePage darkMode={darkMode} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+
 
           <Route path="/users" element={<Users darkMode={darkMode} />} />
 
