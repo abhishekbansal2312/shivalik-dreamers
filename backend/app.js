@@ -9,7 +9,7 @@ const app = express();
 
 // MongoDB connection
 const MongoDB = process.env.MONGO_URL;
- 
+
 mongoose
   .connect(MongoDB) // Improved options for mongoose connection
   .then(() => {
@@ -42,10 +42,12 @@ app.get("/", (req, res) => {
 // Import routes
 const authRoutes = require("./routes/authRoutes.js");
 const userRoutes = require("./routes/userRoutes");
+const reviewRoutes = require("./routes/reviewRoutes.js");
 
 // Use routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
