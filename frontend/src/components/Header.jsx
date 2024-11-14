@@ -64,221 +64,96 @@ const Navbar = ({ darkMode, setDarkMode }) => {
 
   return (
     <nav
-      className={`sticky top-0 left-0 right-0 z-50 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
-      } shadow-md transition-all duration-300 backdrop-blur-md`}
-    >
-      <div className="container mx-auto flex justify-between items-center py-4 px-6 md:px-16">
-        <div className="text-2xl">
-          <Link
-            to="/"
-            className={`flex items-center space-x-2 ${
-              darkMode
-                ? "text-white hover:text-gray-300"
-                : "text-gray-900 hover:text-blue-500"
-            } transition-all duration-300`}
-          >
-            <span>HostelCafe</span>
-          </Link>
-        </div>
-
-        <div className="hidden md:flex space-x-8 items-center">
-          <Link
-            to="/"
-            className={`transition-all duration-300 ${
-              isActive("/")
-                ? "border-b-2 border-blue-500"
-                : darkMode
-                ? "text-gray-300 hover:text-gray-400"
-                : "text-gray-900 hover:text-blue-500"
-            } text-lg`}
-          >
-            Home
-          </Link>
-
-          {isAdmin && (
-            <Link
-              to="/users"
-              className={`transition-all duration-300 ${
-                isActive("/users")
-                  ? "border-b-2 border-blue-500"
-                  : darkMode
-                  ? "text-gray-300 hover:text-gray-400"
-                  : "text-gray-900 hover:text-blue-500"
-              } text-lg`}
-            >
-              Users
-            </Link>
-          )}
-
-          <Link
-            to="/meals"
-            className={`transition-all duration-300 ${
-              isActive("/menu")
-                ? "border-b-2 border-blue-500"
-                : darkMode
-                ? "text-gray-300 hover:text-gray-400"
-                : "text-gray-900 hover:text-blue-500"
-            } text-lg`}
-          >
-            Meals
-          </Link>
-
-          <Link
-            to="/feedback"
-            className={`transition-all duration-300 ${
-              isActive("/feedback")
-                ? "border-b-2 border-blue-500"
-                : darkMode
-                ? "text-gray-300 hover:text-gray-400"
-                : "text-gray-900 hover:text-blue-500"
-            } text-lg`}
-          >
-            Feedback
-          </Link>
-          <Link
-            to="/contacts"
-            className={`transition-all duration-300 ${
-              isActive("/feedback")
-                ? "border-b-2 border-blue-500"
-                : darkMode
-                ? "text-gray-300 hover:text-gray-400"
-                : "text-gray-900 hover:text-blue-500"
-            } text-lg`}
-          >
-            Contacts
-          </Link>
-          {/* Add Profile and Logout icons to the right side */}
-          <div className="flex space-x-4 ml-auto items-center">
-            {isAuthenticated ? (
-              <>
-                <Link
-                  to="/profile"
-                  className={`transition-all duration-300 ${
-                    darkMode
-                      ? "text-gray-300 hover:text-gray-400"
-                      : "text-gray-900 hover:text-blue-500"
-                  } text-lg`}
-                >
-                  <UserIcon className="w-5 h-5" />
-                </Link>
-
-                <button
-                  onClick={handleLogout}
-                  className={`transition-all duration-300 ${
-                    darkMode
-                      ? "text-gray-300 hover:text-red-400"
-                      : "text-gray-900 hover:text-red-500"
-                  } text-lg`}
-                >
-                  <LogoutIcon className="w-5 h-5" />
-                </button>
-              </>
-            ) : (
-              <Link
-                to="/login"
-                className={`transition-all duration-300 ${
-                  darkMode
-                    ? "text-gray-300 hover:text-gray-400"
-                    : "text-gray-900 hover:text-blue-500"
-                } text-lg`}
-              >
-                Login
-              </Link>
-            )}
-          </div>
-        </div>
-
-        <button
-          onClick={toggleDarkMode}
-          className="p-2 rounded-full transition-all duration-300"
-        >
-          {darkMode ? (
-            <SunIcon className="w-6 h-6 text-yellow-500" />
-          ) : (
-            <MoonIcon className="w-6 h-6 text-blue-500" />
-          )}
-        </button>
-
-        <div className="md:hidden">
-          <button
-            onClick={toggleDropdown}
-            className={`transition-all duration-300 ${
-              darkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
-            {isDropdownOpen ? (
-              <XIcon className="w-6 h-6" />
-            ) : (
-              <MenuIcon className="w-6 h-6" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Dropdown Menu */}
-      <div
-        className={`md:hidden transition-all duration-300 ${
-          isDropdownOpen ? "block" : "hidden"
-        } ${darkMode ? "bg-gray-800" : "bg-white"} shadow-lg`}
+  className={`sticky top-0 left-0 right-0 z-50 ${
+    darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+  } shadow-md transition-all duration-300 backdrop-blur-md`}
+>
+  <div className="container mx-auto flex justify-between items-center py-4 px-6 md:px-16">
+    <div className="text-2xl">
+      <Link
+        to="/"
+        className={`flex items-center space-x-2 ${
+          darkMode
+            ? "text-white hover:text-gray-300"
+            : "text-gray-900 hover:text-blue-500"
+        } transition-all duration-300`}
       >
+        <span>HostelCafe</span>
+      </Link>
+    </div>
+
+    <div className="hidden md:flex space-x-8 items-center">
+      <Link
+        to="/"
+        className={`transition-all duration-300 ${
+          isActive("/")
+            ? "border-b-2 border-blue-500"
+            : darkMode
+            ? "text-gray-300 hover:text-gray-400"
+            : "text-gray-900 hover:text-blue-500"
+        } text-lg`}
+      >
+        Home
+      </Link>
+
+      {isAdmin && (
         <Link
-          to="/"
-          className={`block px-6 py-4 transition-all duration-300 ${
-            isActive("/")
-              ? "bg-blue-500 text-white"
+          to="/users"
+          className={`transition-all duration-300 ${
+            isActive("/users")
+              ? "border-b-2 border-blue-500"
               : darkMode
-              ? "text-gray-300 hover:bg-gray-700"
-              : "text-gray-900 hover:bg-gray-100"
+              ? "text-gray-300 hover:text-gray-400"
+              : "text-gray-900 hover:text-blue-500"
           } text-lg`}
         >
-          Home
+          Users
         </Link>
+      )}
 
-        {isAdmin && (
-          <Link
-            to="/users"
-            className={`block px-6 py-4 transition-all duration-300 ${
-              isActive("/users")
-                ? "bg-blue-500 text-white"
-                : darkMode
-                ? "text-gray-300 hover:bg-gray-700"
-                : "text-gray-900 hover:bg-gray-100"
-            } text-lg`}
-          >
-            Users
-          </Link>
-        )}
+      <Link
+        to="/meals"
+        className={`transition-all duration-300 ${
+          isActive("/meals")
+            ? "border-b-2 border-blue-500"
+            : darkMode
+            ? "text-gray-300 hover:text-gray-400"
+            : "text-gray-900 hover:text-blue-500"
+        } text-lg`}
+      >
+        Meals
+      </Link>
 
-        <Link
-          to="/meals"
-          className={`block px-6 py-4 transition-all duration-300 ${
-            isActive("/menu")
-              ? "bg-blue-500 text-white"
-              : darkMode
-              ? "text-gray-300 hover:bg-gray-700"
-              : "text-gray-900 hover:bg-gray-100"
-          } text-lg`}
-        >
-          Meals
-        </Link>
+      <Link
+        to="/feedback"
+        className={`transition-all duration-300 ${
+          isActive("/feedback")
+            ? "border-b-2 border-blue-500"
+            : darkMode
+            ? "text-gray-300 hover:text-gray-400"
+            : "text-gray-900 hover:text-blue-500"
+        } text-lg`}
+      >
+        Feedback
+      </Link>
 
-        <Link
-          to="/feedback"
-          className={`block px-6 py-4 transition-all duration-300 ${
-            isActive("/feedback")
-              ? "bg-blue-500 text-white"
-              : darkMode
-              ? "text-gray-300 hover:bg-gray-700"
-              : "text-gray-900 hover:bg-gray-100"
-          } text-lg`}
-        >
-          Feedback
-        </Link>
+      <Link
+        to="/contacts"
+        className={`transition-all duration-300 ${
+          isActive("/contacts")
+            ? "border-b-2 border-blue-500"
+            : darkMode
+            ? "text-gray-300 hover:text-gray-400"
+            : "text-gray-900 hover:text-blue-500"
+        } text-lg`}
+      >
+        Contacts
+      </Link>
 
-        {/* Add Profile and Logout links for mobile */}
+      {/* Profile and Logout icons */}
+      <div className="flex space-x-4 ml-auto items-center">
         {isAuthenticated ? (
-          <div className="px-6 py-4 flex items-center space-x-4">
+          <>
             <Link
               to="/profile"
               className={`transition-all duration-300 ${
@@ -287,7 +162,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                   : "text-gray-900 hover:text-blue-500"
               } text-lg`}
             >
-              Profile
+              <UserIcon className="w-5 h-5" />
             </Link>
 
             <button
@@ -298,13 +173,13 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                   : "text-gray-900 hover:text-red-500"
               } text-lg`}
             >
-              Logout
+              <LogoutIcon className="w-5 h-5" />
             </button>
-          </div>
+          </>
         ) : (
           <Link
             to="/login"
-            className={`block px-6 py-4 transition-all duration-300 ${
+            className={`transition-all duration-300 ${
               darkMode
                 ? "text-gray-300 hover:text-gray-400"
                 : "text-gray-900 hover:text-blue-500"
@@ -314,7 +189,135 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           </Link>
         )}
       </div>
-    </nav>
+    </div>
+
+    <button
+      onClick={toggleDarkMode}
+      className="p-2 rounded-full transition-all duration-300"
+    >
+      {darkMode ? (
+        <SunIcon className="w-6 h-6 text-yellow-500" />
+      ) : (
+        <MoonIcon className="w-6 h-6 text-blue-500" />
+      )}
+    </button>
+
+    {/* Mobile Dropdown Menu */}
+    <div className="md:hidden">
+      <button
+        onClick={toggleDropdown}
+        className={`transition-all duration-300 ${
+          darkMode ? "text-white" : "text-gray-900"
+        }`}
+      >
+        {isDropdownOpen ? (
+          <XIcon className="w-6 h-6" />
+        ) : (
+          <MenuIcon className="w-6 h-6" />
+        )}
+      </button>
+    </div>
+  </div>
+
+  {/* Mobile Dropdown Menu */}
+  <div
+    className={`md:hidden transition-all duration-300 ${
+      isDropdownOpen ? "block" : "hidden"
+    } ${darkMode ? "bg-gray-800" : "bg-white"} shadow-lg`}
+  >
+    <Link
+      to="/"
+      className={`block px-6 py-4 transition-all duration-300 ${
+        isActive("/")
+          ? "bg-blue-500 text-white"
+          : darkMode
+          ? "text-gray-300 hover:bg-gray-700"
+          : "text-gray-900 hover:bg-gray-100"
+      } text-lg`}
+    >
+      Home
+    </Link>
+
+    {isAdmin && (
+      <Link
+        to="/users"
+        className={`block px-6 py-4 transition-all duration-300 ${
+          isActive("/users")
+            ? "bg-blue-500 text-white"
+            : darkMode
+            ? "text-gray-300 hover:bg-gray-700"
+            : "text-gray-900 hover:bg-gray-100"
+        } text-lg`}
+      >
+        Users
+      </Link>
+    )}
+
+    <Link
+      to="/meals"
+      className={`block px-6 py-4 transition-all duration-300 ${
+        isActive("/meals")
+          ? "bg-blue-500 text-white"
+          : darkMode
+          ? "text-gray-300 hover:bg-gray-700"
+          : "text-gray-900 hover:bg-gray-100"
+      } text-lg`}
+    >
+      Meals
+    </Link>
+
+    <Link
+      to="/feedback"
+      className={`block px-6 py-4 transition-all duration-300 ${
+        isActive("/feedback")
+          ? "bg-blue-500 text-white"
+          : darkMode
+          ? "text-gray-300 hover:bg-gray-700"
+          : "text-gray-900 hover:bg-gray-100"
+      } text-lg`}
+    >
+      Feedback
+    </Link>
+
+    {/* Profile and Logout links */}
+    {isAuthenticated ? (
+      <div className="px-6 py-4 flex items-center space-x-4">
+        <Link
+          to="/profile"
+          className={`transition-all duration-300 ${
+            darkMode
+              ? "text-gray-300 hover:text-gray-400"
+              : "text-gray-900 hover:text-blue-500"
+          } text-lg`}
+        >
+          Profile
+        </Link>
+
+        <button
+          onClick={handleLogout}
+          className={`transition-all duration-300 ${
+            darkMode
+              ? "text-gray-300 hover:text-red-400"
+              : "text-gray-900 hover:text-red-500"
+          } text-lg`}
+        >
+          Logout
+        </button>
+      </div>
+    ) : (
+      <Link
+        to="/login"
+        className={`block px-6 py-4 transition-all duration-300 ${
+          darkMode
+            ? "text-gray-300 hover:text-gray-400"
+            : "text-gray-900 hover:text-blue-500"
+        } text-lg`}
+      >
+        Login
+      </Link>
+    )}
+  </div>
+</nav>
   );
 };
 
