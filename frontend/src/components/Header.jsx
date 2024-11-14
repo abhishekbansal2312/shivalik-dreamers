@@ -107,7 +107,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           )}
 
           <Link
-            to="/menu"
+            to="/meals"
             className={`transition-all duration-300 ${
               isActive("/menu")
                 ? "border-b-2 border-blue-500"
@@ -116,7 +116,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                 : "text-gray-900 hover:text-blue-500"
             } text-lg`}
           >
-            Menu
+            Meals
           </Link>
 
           <Link
@@ -232,7 +232,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
         )}
 
         <Link
-          to="/menu"
+          to="/meals"
           className={`block px-6 py-4 transition-all duration-300 ${
             isActive("/menu")
               ? "bg-blue-500 text-white"
@@ -241,7 +241,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
               : "text-gray-900 hover:bg-gray-100"
           } text-lg`}
         >
-          Menu
+          Meals
         </Link>
 
         <Link

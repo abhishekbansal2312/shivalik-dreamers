@@ -18,6 +18,9 @@ const createMeal = async (req, res) => {
       available,
     } = req.body;
 
+    // Ensure image is a string or set it to an empty string if invalid
+    const imageUrl = typeof image === "string" ? image : "";
+
     // Create the new meal
     const newMeal = new Meal({
       name,
@@ -30,8 +33,8 @@ const createMeal = async (req, res) => {
       carbs,
       fats,
       allergens,
-      image,
-      available: available || false, // Ensure availability is boolean
+      image: imageUrl,
+      available: available || false,
     });
 
     await newMeal.save();

@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast"; // Import toast
 import MealCard from "./MealCard";
 import CreateMeal from "./CreateMeal";
 import UpdateMealForm from "./UpdateMealForm";
 import Modal from "../Modal";
-import { useAuth } from "../../provider/AuthProvider"; // Assuming you have an AuthContext for user info
 
-const MealList = ({ darkMode }) => {
+const MealList = ({ darkMode, toggleDarkMode }) => {
   const [meals, setMeals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateMeal, setShowCreateMeal] = useState(false);
   const [showEditMeal, setShowEditMeal] = useState(false);
   const [editingMeal, setEditingMeal] = useState(null);
-  const { user } = useAuth(); // Access the logged-in user from context
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -101,9 +98,6 @@ const MealList = ({ darkMode }) => {
     );
   }
 
-  // Check if the user is either an admin or cafeteria member
-  const canAddMeal = user && (user.role === "admin" || user.role === "member");
-
   return (
     <div
       className={`px-16 py-8 ${
@@ -145,7 +139,7 @@ const MealList = ({ darkMode }) => {
             meal={editingMeal}
             onCancel={() => setEditingMeal(null)}
             setMeals={setMeals}
-            darkMode={darkMode}
+            darkMode={true}
           />
         </Modal>
 
@@ -153,20 +147,17 @@ const MealList = ({ darkMode }) => {
           {meals.length === 0 ? (
             <p>No meals found.</p>
           ) : (
-            meals.map((meal) => {
-              if (!meal || !meal._id) return null; // Add a check for valid meal and _id
-
-              return (
-                <MealCard
-                  key={meal._id}
-                  meal={meal}
-                  darkMode={darkMode}
-                  isAdmin={isAdmin}
-                  onDelete={() => handleDelete(meal._id)}
-                  onEdit={() => setEditingMeal(meal)}
-                />
-              );
-            })
+            meals.map((meal) => (
+              <MealCard
+                key={meal._id}
+                meal={meal}
+                darkMode={darkMode}
+                isAdmin={isAdmin}
+                onDelete={() => handleDelete(meal._id)}
+                onEdit={() => setEditingMeal(meal)}
+                onUpdateMeal={handleUpdateMeal}
+              />
+            ))
           )}
         </div>
       </div>
