@@ -88,12 +88,6 @@ const App = () => {
           <Route path="/meals/new" element={<MealForm darkMode={darkMode} />} />
           <Route path="/meals/:id" element={<MealForm darkMode={darkMode} />} />
 
-          {/* Meal Details route */}
-          <Route
-            path="/meals/details/:id"
-            element={<MealDetails darkMode={darkMode} />}
-          />
-
           {/* Review route */}
           <Route path="/feedback" element={<Review darkMode={darkMode} />} />
 
@@ -134,6 +128,15 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          {/* <Route
+            path="/contact"
+            element={
+              <ProtectedRoute>
+                <Contact darkMode={darkMode} />
+              </ProtectedRoute>
+            }
+          /> */}
+
           {/* Fallback route for 404 */}
           <Route path="*" element={<div>404 - Page Not Found</div>} />
         </Routes>
