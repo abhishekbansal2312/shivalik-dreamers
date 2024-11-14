@@ -44,12 +44,14 @@ const authRoutes = require("./routes/authRoutes.js");
 const userRoutes = require("./routes/userRoutes");
 const reviewRoutes = require("./routes/reviewRoutes.js");
 const foodRoutes = require("./routes/foodRoutes");
+const contactRoute = require("./routes/contactRoute");
 
 // Use routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/meals", foodRoutes);
+app.use("/api/contact", contactRoute);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

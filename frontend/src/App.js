@@ -13,6 +13,8 @@ import MealList from "../src/components/order/MealList"; // Add this line
 import Review from "../src/pages/Review";
 import ProtectedRoute from "../src/components/ProtectedRoute";
 import ProtectedRouteAdminOnly from "../src/components/ProtectedRouteAdminOnly";
+import Contact from "./pages/Contact";
+import AllMails from "../src/components/contact/AllMails";
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, darkMode, setDarkMode } =
@@ -126,6 +128,22 @@ const App = () => {
               <ProtectedRoute>
                 <Review darkMode={darkMode} />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <ProtectedRoute>
+                <Contact darkMode={darkMode} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contact/allmails"
+            element={
+              <ProtectedRouteAdminOnly>
+                <AllMails darkMode={darkMode} />
+              </ProtectedRouteAdminOnly>
             }
           />
           {/* <Route

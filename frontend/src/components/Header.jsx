@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
-import { SunIcon, MoonIcon } from "@heroicons/react/outline";
+import {
+  SunIcon,
+  MoonIcon,
+  UserIcon,
+  LogoutIcon,
+} from "@heroicons/react/outline"; // Import the necessary icons
 
 import { useAuth } from "../provider/AuthProvider";
 import { jwtDecode } from "jwt-decode";
@@ -120,19 +125,6 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           </Link>
 
           <Link
-            to="/orders"
-            className={`transition-all duration-300 ${
-              isActive("/orders")
-                ? "border-b-2 border-blue-500"
-                : darkMode
-                ? "text-gray-300 hover:text-gray-400"
-                : "text-gray-900 hover:text-blue-500"
-            } text-lg`}
-          >
-            Orders
-          </Link>
-
-          <Link
             to="/feedback"
             className={`transition-all duration-300 ${
               isActive("/feedback")
@@ -144,30 +136,57 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           >
             Feedback
           </Link>
+          <Link
+            to="/contacts"
+            className={`transition-all duration-300 ${
+              isActive("/feedback")
+                ? "border-b-2 border-blue-500"
+                : darkMode
+                ? "text-gray-300 hover:text-gray-400"
+                : "text-gray-900 hover:text-blue-500"
+            } text-lg`}
+          >
+            Contacts
+          </Link>
+          {/* Add Profile and Logout icons to the right side */}
+          <div className="flex space-x-4 ml-auto items-center">
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/profile"
+                  className={`transition-all duration-300 ${
+                    darkMode
+                      ? "text-gray-300 hover:text-gray-400"
+                      : "text-gray-900 hover:text-blue-500"
+                  } text-lg`}
+                >
+                  <UserIcon className="w-5 h-5" />
+                </Link>
 
-          {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className={`transition-all duration-300 ${
-                darkMode
-                  ? "text-gray-300 hover:text-red-400"
-                  : "text-gray-900 hover:text-red-500"
-              } text-lg`}
-            >
-              Logout
-            </button>
-          ) : (
-            <Link
-              to="/login"
-              className={`transition-all duration-300 ${
-                darkMode
-                  ? "text-gray-300 hover:text-gray-400"
-                  : "text-gray-900 hover:text-blue-500"
-              } text-lg`}
-            >
-              Login
-            </Link>
-          )}
+                <button
+                  onClick={handleLogout}
+                  className={`transition-all duration-300 ${
+                    darkMode
+                      ? "text-gray-300 hover:text-red-400"
+                      : "text-gray-900 hover:text-red-500"
+                  } text-lg`}
+                >
+                  <LogoutIcon className="w-5 h-5" />
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className={`transition-all duration-300 ${
+                  darkMode
+                    ? "text-gray-300 hover:text-gray-400"
+                    : "text-gray-900 hover:text-blue-500"
+                } text-lg`}
+              >
+                Login
+              </Link>
+            )}
+          </div>
         </div>
 
         <button
@@ -245,19 +264,6 @@ const Navbar = ({ darkMode, setDarkMode }) => {
         </Link>
 
         <Link
-          to="/orders"
-          className={`block px-6 py-4 transition-all duration-300 ${
-            isActive("/orders")
-              ? "bg-blue-500 text-white"
-              : darkMode
-              ? "text-gray-300 hover:bg-gray-700"
-              : "text-gray-900 hover:bg-gray-100"
-          } text-lg`}
-        >
-          Orders
-        </Link>
-
-        <Link
           to="/feedback"
           className={`block px-6 py-4 transition-all duration-300 ${
             isActive("/feedback")
@@ -270,17 +276,31 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           Feedback
         </Link>
 
+        {/* Add Profile and Logout links for mobile */}
         {isAuthenticated ? (
-          <button
-            onClick={handleLogout}
-            className={`block px-6 py-4 transition-all duration-300 ${
-              darkMode
-                ? "text-gray-300 hover:text-red-400"
-                : "text-gray-900 hover:text-red-500"
-            } text-lg`}
-          >
-            Logout
-          </button>
+          <div className="px-6 py-4 flex items-center space-x-4">
+            <Link
+              to="/profile"
+              className={`transition-all duration-300 ${
+                darkMode
+                  ? "text-gray-300 hover:text-gray-400"
+                  : "text-gray-900 hover:text-blue-500"
+              } text-lg`}
+            >
+              Profile
+            </Link>
+
+            <button
+              onClick={handleLogout}
+              className={`transition-all duration-300 ${
+                darkMode
+                  ? "text-gray-300 hover:text-red-400"
+                  : "text-gray-900 hover:text-red-500"
+              } text-lg`}
+            >
+              Logout
+            </button>
+          </div>
         ) : (
           <Link
             to="/login"
