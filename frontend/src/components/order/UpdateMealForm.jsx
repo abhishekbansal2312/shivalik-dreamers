@@ -44,9 +44,10 @@ const UpdateMealForm = ({ meal, setMeals, onSave, onCancel }) => {
     event.preventDefault();
 
     try {
-      // If a new image is uploaded, start the upload process
+      // Use the existing image URL if no new image is selected
       let pictureURL = meal.pictureURL;
 
+      // Only attempt to upload a new image if one has been selected
       if (updatedMeal.image) {
         const storageRef = ref(storage, `meals/${updatedMeal.image.name}`);
         const uploadTask = uploadBytesResumable(storageRef, updatedMeal.image);
@@ -64,7 +65,7 @@ const UpdateMealForm = ({ meal, setMeals, onSave, onCancel }) => {
           async () => {
             try {
               pictureURL = await getDownloadURL(uploadTask.snapshot.ref);
-              await submitUpdatedMeal(pictureURL);
+              await submitUpdatedMeal(pictureURL); // Submit with new pictureURL
             } catch (err) {
               setUploadError(err.message);
               setUploading(false);
@@ -73,7 +74,7 @@ const UpdateMealForm = ({ meal, setMeals, onSave, onCancel }) => {
           }
         );
       } else {
-        // If no new image, just submit the data with the existing picture URL
+        // If no new image is selected, submit with the existing pictureURL
         await submitUpdatedMeal(pictureURL);
       }
     } catch (err) {
