@@ -45,6 +45,7 @@ const App = () => {
             element={
               <Home
                 setIsAuthenticated={setIsAuthenticated}
+                isAuthenticated={isAuthenticated}
                 darkMode={darkMode}
               />
             }
