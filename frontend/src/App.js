@@ -89,10 +89,6 @@ const App = () => {
           <Route path="/meals/:id" element={<MealForm darkMode={darkMode} />} />
 
           {/* Meal Details route */}
-          <Route
-            path="/meals/details/:id"
-            element={<MealDetails darkMode={darkMode} />}
-          />
 
           {/* Review route */}
           <Route path="/feedback" element={<Review darkMode={darkMode} />} />

@@ -1,5 +1,6 @@
 // src/components/HomePage.jsx
 import React from 'react';
+import banner from "../assets/img.png"
 
 const foodItems = [
   { id: 1, name: 'Veg Biryani', image: 'https://via.placeholder.com/400x300.png?text=Veg+Biryani', category: 'Main Course' },
@@ -32,7 +33,7 @@ const HomePage = ({ darkMode }) => {
       {/* Full-Screen Image Banner */}
       <div className="relative w-full h-screen">
         <img
-          src="https://via.placeholder.com/1500x800.png?text=Hostel+Cafeteria"
+          src={banner}
           alt="Hostel Cafeteria Banner"
           className="w-full h-full object-cover"
         />
