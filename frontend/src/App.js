@@ -15,6 +15,7 @@ import ProtectedRoute from "../src/components/ProtectedRoute";
 import ProtectedRouteAdminOnly from "../src/components/ProtectedRouteAdminOnly";
 import Contact from "./pages/Contact";
 import AllMails from "../src/components/contact/AllMails";
+import UserDetail from "./components/user/ProfilePage";
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, darkMode, setDarkMode } =
@@ -90,10 +91,12 @@ const App = () => {
           {/* Meal Form route (for adding a new meal or editing an existing one) */}
           <Route path="/meals/new" element={<MealForm darkMode={darkMode} />} />
           <Route path="/meals/:id" element={<MealForm darkMode={darkMode} />} />
-
+          <Route
+            path="/users/:id"
+            element={<UserDetail darkMode={darkMode} />}
+          />
 
           {/* Meal Details route */}
-
 
           {/* Review route */}
           <Route path="/feedback" element={<Review darkMode={darkMode} />} />
