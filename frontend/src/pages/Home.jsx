@@ -1,118 +1,154 @@
 // src/components/HomePage.jsx
 import React from 'react';
+import banner from "../assets/img.png";
+import GetStarted from '../components/GetStarted';
+import ExploreMenu from '../components/ExploreMenu';
+import mos from "../assets/mos.jpg";
+import fars from "../assets/fars.jpg";
+import upap from "../assets/upap.jpg";
+import aaus from "../assets/aaus.jpg";
 
-const foodItems = [
-  { id: 1, name: 'Veg Biryani', image: 'https://via.placeholder.com/400x300.png?text=Veg+Biryani', category: 'Main Course' },
-  { id: 2, name: 'Chicken Curry', image: 'https://via.placeholder.com/400x300.png?text=Chicken+Curry', category: 'Main Course' },
-  { id: 3, name: 'Paneer Tikka', image: 'https://via.placeholder.com/400x300.png?text=Paneer+Tikka', category: 'Appetizers' },
-  { id: 4, name: 'Dal Tadka', image: 'https://via.placeholder.com/400x300.png?text=Dal+Tadka', category: 'Main Course' },
-  { id: 5, name: 'Chocolate Cake', image: 'https://via.placeholder.com/400x300.png?text=Chocolate+Cake', category: 'Desserts' },
-  { id: 6, name: 'Ice Cream', image: 'https://via.placeholder.com/400x300.png?text=Ice+Cream', category: 'Desserts' },
-  { id: 7, name: 'Spring Rolls', image: 'https://via.placeholder.com/400x300.png?text=Spring+Rolls', category: 'Appetizers' },
-  { id: 8, name: 'Mango Lassi', image: 'https://via.placeholder.com/400x300.png?text=Mango+Lassi', category: 'Beverages' },
-  // ... Add more items as needed
-];
-
-const categories = [
-  { name: 'Main Course', icon: '🍛' },
-  { name: 'Appetizers', icon: '🍢' },
-  { name: 'Desserts', icon: '🍰' },
-  { name: 'Beverages', icon: '🥤' },
-];
-
-const HomePage = ({ darkMode }) => {
-  // Function to filter top 4 items from each category
-  const getTopItemsByCategory = (category) => {
-    return foodItems.filter((item) => item.category === category).slice(0, 4);
-  };
-
+const HomePage = ({ darkMode, isAuthenticated }) => {
   return (
     <div className={`${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'} font-sans`}>
 
       {/* Full-Screen Image Banner */}
       <div className="relative w-full h-screen">
         <img
-          src="https://via.placeholder.com/1500x800.png?text=Hostel+Cafeteria"
+          src={banner}
           alt="Hostel Cafeteria Banner"
           className="w-full h-full object-cover"
+          style={{ filter: "brightness(150%)" }}
         />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white">
-          <h1 className="text-5xl font-bold">Welcome to the Hostel Cafeteria</h1>
-        </div>
       </div>
 
-      {/* Interactive Section */}
-      <section className={`${darkMode ? 'bg-gray-800' : 'bg-gray-100'} p-10`}>
-        <h2 className="text-3xl text-center font-semibold mb-6">Order Your Favorite Meal</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {foodItems.map((food) => (
-            <div
-              key={food.id}
-              className={`${darkMode ? 'bg-gray-700' : 'bg-white'} relative rounded-lg shadow-lg hover:scale-105 transform transition-all duration-300`}
-            >
-              <img
-                src={food.image}
-                alt={food.name}
-                className="w-full h-48 object-cover rounded-t-lg"
-              />
-              <div className="p-4 text-center">
-                <h3 className="text-xl font-semibold">{food.name}</h3>
-                <button className={`${darkMode ? 'bg-green-600' : 'bg-green-500'} mt-2 px-4 py-2 text-white rounded-md hover:bg-green-700`}>
-                  Order Now
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Conditionally render GetStarted or ExploreMenu based on login status */}
+      {isAuthenticated ? (
+        <ExploreMenu darkMode={darkMode} />
+      ) : (
+        <GetStarted darkMode={darkMode} />
+      )}
 
-      {/* What Would You Like Section */}
-      <section className={`${darkMode ? 'bg-gray-800' : 'bg-gray-100'} p-10`}>
-        <h2 className="text-3xl text-center font-semibold mb-6">What Would You Like?</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {categories.map((category) => (
-            <div
-              key={category.name}
-              className={`${darkMode ? 'bg-gray-700' : 'bg-white'} flex flex-col items-center p-6 rounded-lg shadow-lg text-center hover:scale-105 transform transition-all duration-300`}
-            >
-              <span className="text-5xl mb-4">{category.icon}</span>
-              <h3 className="text-xl font-semibold">{category.name}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Main Content Below Banner */}
+      <div className="px-4 py-12 max-w-screen-xl mx-auto">
+        {/* Meal Ordering System */}
+        <section className="mb-16 grid md:grid-cols-2 gap-8">
+          {/* Left Section - Content about Meal Ordering System */}
+          <div className="flex flex-col justify-center">
+            {/* Heading of the section */}
+            <h2 className="text-3xl font-semibold mb-4">Meal Ordering System</h2>
 
-      {/* Category Top 4 Options + View More */}
-      <section className={`${darkMode ? 'bg-gray-800' : 'bg-gray-100'} p-10`}>
-        {categories.map((category) => (
-          <div key={category.name} className="mb-10">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-2xl font-semibold">{category.name}</h3>
-              <button className="text-blue-500 hover:underline">View More</button>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {getTopItemsByCategory(category.name).map((food) => (
-                <div
-                  key={food.id}
-                  className={`${darkMode ? 'bg-gray-700' : 'bg-white'} relative rounded-lg shadow-lg hover:scale-105 transform transition-all duration-300`}
-                >
-                  <img
-                    src={food.image}
-                    alt={food.name}
-                    className="w-full h-48 object-cover rounded-t-lg"
-                  />
-                  <div className="p-4 text-center">
-                    <h3 className="text-xl font-semibold">{food.name}</h3>
-                    <button className={`${darkMode ? 'bg-green-600' : 'bg-green-500'} mt-2 px-4 py-2 text-white rounded-md hover:bg-green-700`}>
-                      Order Now
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* First Paragraph - Explaining the Browse Menu feature */}
+            <p className="mb-4">
+              <strong>Browse Menu: </strong>
+              Students will be able to easily view the daily menu offered by the cafeteria. The menu includes detailed descriptions of the meals, allowing students to understand the ingredients and preparation of each dish. Additionally, each menu item is accompanied by high-quality images, providing a clear visual representation of the meal. Prices for each item are also displayed, helping students make informed choices based on their budget.
+            </p>
+
+            {/* Second Paragraph - Explaining the Customize Orders feature */}
+            <p>
+              <strong>Customize Orders: </strong>
+              The system allows students to customize their orders according to their preferences. This includes adjusting portion sizes to suit individual appetites or dietary needs. Students can also specify dietary preferences such as vegetarian, vegan, gluten-free, or others. Additionally, the option for adding extra toppings or special requests gives students the flexibility to personalize their meals to match their tastes.
+            </p>
           </div>
-        ))}
-      </section>
+
+          {/* Right Section - Image related to Meal Ordering System */}
+          <div className="relative">
+            {/* Meal Ordering System Image */}
+            <img
+              src={mos}
+              alt="Meal Ordering System"
+              className="w-full h-full object-cover rounded-lg shadow-lg"
+            />
+          </div>
+        </section>
+
+        {/* Feedback and Rating System */}
+        <section className="mb-16 grid md:grid-cols-2 gap-8">
+          {/* Left Section - Image related to Feedback and Rating System */}
+          <div className="relative">
+            {/* Feedback and Rating System Image */}
+            <img
+              src={fars}
+              alt="Feedback and Rating System"
+              className="w-full h-full object-cover rounded-lg shadow-lg"
+            />
+          </div>
+
+          {/* Right Section - Content about Feedback and Rating System */}
+          <div className="flex flex-col justify-center">
+            {/* Heading of the section */}
+            <h2 className="text-3xl font-semibold mb-4">Feedback and Rating System</h2>
+
+            {/* First Paragraph - Explaining the Rate Your Meal feature */}
+            <p className="mb-4">
+              <strong>Detailed Feedback on Meal Experience: </strong>
+              After students finish their meals, they have the opportunity to provide specific feedback on various aspects of their dining experience, including the portion size, presentation of the meal, and timeliness of service. This feedback can also include suggestions for improvement, such as preferred meal options or adjustments to the cafeteria's offerings.
+            </p>
+
+            {/* Second Paragraph - Explaining the Anonymous Feedback Option */}
+            <p>
+              <strong>Feedback Option: </strong>
+              In order to encourage honest and constructive opinions, students have the option to submit their feedback anonymously. This feature ensures that students feel more comfortable sharing their true thoughts and experiences without fear of judgment. The anonymity option helps in gathering more candid feedback, which can be essential for the cafeteria management to understand areas that need improvement.
+            </p>
+          </div>
+        </section>
+
+
+        {/* User Profiles and Preferences */}
+        <section className="mb-16 grid md:grid-cols-2 gap-8">
+          {/* Left Section - Content about User Profiles and Preferences */}
+          <div className="flex flex-col justify-center">
+            {/* Heading of the section */}
+            <h2 className="text-3xl font-semibold mb-4">User Profiles and Preferences</h2>
+
+            {/* First Paragraph - Explaining the Student Profiles feature */}
+            <p className="mb-4">
+              <strong>Student Profiles: </strong>
+              Each student using the system has their own personalized profile. This profile contains important information such as the student's order history, allowing them to see what meals they have previously ordered. Additionally, students can manage their dietary preferences within their profile, such as indicating any food allergies or preferences like vegetarian or vegan diets. Furthermore, students can mark their favorite meals, so they can easily reorder them or be reminded of them in the future.
+            </p>
+
+            {/* Second Paragraph - Explaining the One-Click Reordering feature */}
+            <p>
+              <strong>One-Click Reordering: </strong>
+              The system includes a convenient "One-Click Reordering" feature, which allows students to quickly access their past orders and reorder their meals with just a single click. This feature is designed to make it easier for students who regularly order the same meals to save time. Instead of browsing through the entire menu, they can simply select a previously ordered meal and reorder it in an instant.
+            </p>
+          </div>
+
+          {/* Right Section - Image related to User Profiles and Preferences */}
+          <div className="relative">
+            {/* User Profiles and Preferences Image */}
+            <img
+              src={upap}
+              alt="User Profiles and Preferences"
+              className="w-full h-full object-cover rounded-lg shadow-lg"
+            />
+          </div>
+        </section>
+
+        <section className="mb-16 grid md:grid-cols-2 gap-8">
+          <div className="relative">
+            <img
+              src={aaus}
+              alt="Feedback and Rating System"
+              className="w-full h-full object-cover rounded-lg shadow-lg"
+            />
+          </div>
+
+          <div className="flex flex-col justify-center">
+            <h2 className="text-3xl font-semibold mb-4">Authentication and User Security</h2>
+
+            <p className="mb-4">
+              <strong>JWT Token for Secure Authentication: </strong>
+              JSON Web Tokens (JWT) are used for securing user authentication in the system. When a user logs in, a JWT token is generated and sent to the client. This token contains encrypted user data and serves as proof of identity for future requests. The token is stored securely on the client-side (typically in cookies or local storage) and is sent with each request to verify the user's authenticity.            </p>
+
+            <p>
+              <strong>Bcrypt for Password Hashing: </strong>
+              Bcrypt is employed to enhance user security by securely hashing user passwords before storing them in the database. Instead of storing plaintext passwords, bcrypt applies a hashing algorithm that turns the password into a fixed-length hash, which is stored in the database. Additionally, bcrypt automatically adds a unique salt to each password, preventing attackers from using precomputed hash values (rainbow tables) to crack passwords.
+            </p>
+          </div>
+        </section>
+      </div>
+
     </div>
   );
 };

@@ -47,6 +47,7 @@ const App = () => {
             element={
               <Home
                 setIsAuthenticated={setIsAuthenticated}
+                isAuthenticated={isAuthenticated}
                 darkMode={darkMode}
               />
             }
@@ -89,6 +90,10 @@ const App = () => {
           {/* Meal Form route (for adding a new meal or editing an existing one) */}
           <Route path="/meals/new" element={<MealForm darkMode={darkMode} />} />
           <Route path="/meals/:id" element={<MealForm darkMode={darkMode} />} />
+
+
+          {/* Meal Details route */}
+
 
           {/* Review route */}
           <Route path="/feedback" element={<Review darkMode={darkMode} />} />
