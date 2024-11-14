@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaInbox, FaRegPaperPlane, FaFolder, FaRegStar } from "react-icons/fa";
-import { motion } from "framer-motion"; // Importing Framer Motion for animations
+import { motion } from "framer-motion";
 
 const AllMails = ({ darkMode }) => {
   const [mails, setMails] = useState([]);
@@ -52,22 +52,16 @@ const AllMails = ({ darkMode }) => {
   return (
     <div
       className={`flex h-screen ${
-        darkMode ? "bg-gray-900" : "bg-gray-50"
+        darkMode ? "bg-gray-900 text-gray-200" : "bg-gray-50 text-gray-800"
       } transition-colors duration-300`}
     >
       {/* Sidebar */}
       <aside
-        className={`w-1/4 p-6 flex flex-col shadow-lg border-r border-gray-200 ${
-          darkMode ? "bg-gray-800" : "bg-white"
+        className={`w-1/4 p-6 flex flex-col shadow-lg border-r ${
+          darkMode ? "border-gray-700 bg-gray-800" : "border-gray-200 bg-white"
         }`}
       >
-        <h3
-          className={`text-xl font-semibold mb-4 ${
-            darkMode ? "text-white" : "text-gray-900"
-          }`}
-        >
-          Labels
-        </h3>
+        <h3 className="text-xl font-semibold mb-4">Labels</h3>
         <ul className="space-y-2">
           {["all", "unread", "read", "replied"].map((status) => (
             <li key={status}>
@@ -78,9 +72,9 @@ const AllMails = ({ darkMode }) => {
                     ? "bg-blue-600 text-white shadow-md"
                     : `${
                         darkMode
-                          ? "bg-transparent text-gray-300"
-                          : "bg-transparent text-gray-800"
-                      } hover:bg-gray-200 dark:hover:bg-gray-700`
+                          ? "text-gray-300 hover:bg-gray-700"
+                          : "text-gray-800 hover:bg-gray-200"
+                      }`
                 }`}
               >
                 {status === "all" && <FaInbox className="mr-2" />}
@@ -94,22 +88,16 @@ const AllMails = ({ darkMode }) => {
         </ul>
 
         {/* Sort */}
-        <h3
-          className={`text-xl font-semibold mb-4 ${
-            darkMode ? "text-white" : "text-gray-900"
-          }`}
-        >
-          Sort by Date
-        </h3>
+        <h3 className="text-xl font-semibold mb-4">Sort by Date</h3>
         <button
           onClick={() => {
             setSortOrder(sortOrder === "asc" ? "desc" : "asc");
             handleSort();
           }}
-          className={`w-full text-left p-3 rounded-lg bg-transparent transition-colors duration-300 hover:bg-gray-200 ${
+          className={`w-full text-left p-3 rounded-lg transition-colors duration-300 ${
             darkMode
-              ? "text-gray-300 dark:hover:bg-gray-700"
-              : "text-gray-800 dark:hover:bg-gray-700"
+              ? "text-gray-300 hover:bg-gray-700"
+              : "text-gray-800 hover:bg-gray-200"
           }`}
         >
           Sort: {sortOrder === "asc" ? "Oldest First" : "Newest First"}
@@ -118,26 +106,24 @@ const AllMails = ({ darkMode }) => {
 
       {/* Main content */}
       <main className="w-3/4 p-0 overflow-hidden">
-        {" "}
-        {/* Set padding to 0 */}
         <section
-          className={`py-12 rounded-lg shadow-lg h-full border border-gray-200 ${
-            darkMode ? "bg-gray-900" : "bg-white"
+          className={`py-12 rounded-lg shadow-lg h-full border ${
+            darkMode
+              ? "bg-gray-900 border-gray-700"
+              : "bg-white border-gray-200"
           }`}
         >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2
-              className={`text-3xl font-semibold mb-6 ${
-                darkMode ? "text-white" : "text-gray-900"
-              }`}
-            >
+            <h2 className="text-3xl font-semibold mb-6">
               {selectedMail ? "Mail Details" : "All Mails"}
             </h2>
 
             {selectedMail ? (
               <motion.div
                 className={`mail-details p-6 rounded-lg shadow-lg ${
-                  darkMode ? "bg-gray-800" : "bg-gray-100"
+                  darkMode
+                    ? "bg-gray-800 text-gray-200"
+                    : "bg-gray-100 text-gray-900"
                 }`}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -149,63 +135,53 @@ const AllMails = ({ darkMode }) => {
                 >
                   Back to Mails
                 </button>
-                <h3 className="text-2xl font-semibold mb-2 dark:text-white">
+                <h3 className="text-2xl font-semibold mb-2">
                   {selectedMail.subject}
                 </h3>
-                <p className="mb-2 dark:text-gray-300">
+                <p className="mb-2">
                   <strong>From:</strong> {selectedMail.email}
                 </p>
-                <p className="mb-2 dark:text-gray-300">
+                <p className="mb-2">
                   <strong>Date:</strong>{" "}
                   {new Date(selectedMail.sentAt).toLocaleString()}
                 </p>
-                <p className="mb-4 dark:text-gray-300">
+                <p className="mb-4">
                   <strong>Status:</strong> {selectedMail.status}
                 </p>
-                <p className="dark:text-gray-200">{selectedMail.message}</p>
+                <p>{selectedMail.message}</p>
               </motion.div>
             ) : (
               <div className="overflow-y-auto h-96">
                 <motion.table
-                  className={`min-w-full rounded-lg shadow-md ${
-                    darkMode ? "bg-gray-800" : "bg-white"
-                  }`}
+                  className="min-w-full rounded-lg shadow-md"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
                 >
                   <thead>
-                    <tr
-                      className={`${darkMode ? "bg-gray-700" : "bg-gray-800"}`}
-                    >
-                      <th className="px-4 py-3 text-left dark:text-gray-100">
-                        Subject
-                      </th>
-                      <th className="px-4 py-3 text-left dark:text-gray-100">
-                        From
-                      </th>
-                      <th className="px-4 py-3 text-left dark:text-gray-100">
-                        Sent At
-                      </th>
+                    <tr className={darkMode ? "bg-gray-700" : "bg-gray-200"}>
+                      <th className="px-4 py-3 text-left">Subject</th>
+                      <th className="px-4 py-3 text-left">From</th>
+                      <th className="px-4 py-3 text-left">Sent At</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredMails.map((mail) => (
                       <motion.tr
                         key={mail._id}
-                        className={`hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300 cursor-pointer`}
+                        className={`hover:bg-gray-100 ${
+                          darkMode
+                            ? "dark:hover:bg-gray-700"
+                            : "hover:bg-gray-200"
+                        } cursor-pointer`}
                         onClick={() => setSelectedMail(mail)}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <td className="border px-4 py-3 dark:border-gray-600 dark:text-gray-300">
-                          {mail.subject}
-                        </td>
-                        <td className="border px-4 py-3 dark:border-gray-600 dark:text-gray-300">
-                          {mail.email}
-                        </td>
-                        <td className="border px-4 py-3 dark:border-gray-600 dark:text-gray-300">
+                        <td className="border px-4 py-3">{mail.subject}</td>
+                        <td className="border px-4 py-3">{mail.email}</td>
+                        <td className="border px-4 py-3">
                           {new Date(mail.sentAt).toLocaleString()}
                         </td>
                       </motion.tr>
