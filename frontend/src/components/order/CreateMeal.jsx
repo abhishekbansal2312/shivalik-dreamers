@@ -3,7 +3,7 @@ import { storage } from "../../firebase"; // Firebase configuration
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"; // Firebase storage functions
 import { toast } from "react-hot-toast"; // Importing toast
 
-const MealForm = ({ setMeals, darkMode, onSave, onCancel }) => {
+const MealForm = ({ setMeals, onSave, onCancel }) => {
   const [newMeal, setNewMeal] = useState({
     name: "",
     category: "",
@@ -112,8 +112,10 @@ const MealForm = ({ setMeals, darkMode, onSave, onCancel }) => {
     event.preventDefault();
     setDragging(false);
     const file = event.dataTransfer.files[0];
-    if (file) {
+    if (file && file.type.startsWith("image/")) {
       setNewMeal((prev) => ({ ...prev, image: file }));
+    } else {
+      toast.error("Please upload a valid image file.");
     }
   };
 
@@ -170,10 +172,7 @@ const MealForm = ({ setMeals, darkMode, onSave, onCancel }) => {
         </div>
 
         <div className="mb-2">
-          <label
-            htmlFor="name"
-            className="block text-gray-700 dark:text-gray-300 font-semibold mb-1"
-          >
+          <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
             Meal Name
           </label>
           <input
@@ -182,10 +181,11 @@ const MealForm = ({ setMeals, darkMode, onSave, onCancel }) => {
             value={newMeal.name}
             onChange={(e) => setNewMeal({ ...newMeal, name: e.target.value })}
             required
-            className="w-full mt-1 p-2 h-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:text-white"
+            className="w-full p-2 h-10 border rounded-lg dark:bg-gray-800"
           />
         </div>
 
+        {/* Additional form fields for category, description, price, etc. */}
         <div className="mb-2">
           <label
             htmlFor="description"
@@ -250,7 +250,7 @@ const MealForm = ({ setMeals, darkMode, onSave, onCancel }) => {
           </label>
           <input
             type="number"
-            placeholder="Enter total calories"
+            placeholder="Enter total calorie"
             value={newMeal.caloric}
             onChange={(e) =>
               setNewMeal({ ...newMeal, caloric: e.target.value })
@@ -317,15 +317,11 @@ const MealForm = ({ setMeals, darkMode, onSave, onCancel }) => {
           <div className="flex items-center">
             <input
               type="checkbox"
-              id="available"
               checked={newMeal.available}
               onChange={handleToggleAvailable}
               className="mr-2"
             />
-            <label
-              htmlFor="available"
-              className="text-gray-700 dark:text-gray-300"
-            >
+            <label className="text-gray-700 dark:text-gray-300">
               Available
             </label>
           </div>
@@ -334,16 +330,14 @@ const MealForm = ({ setMeals, darkMode, onSave, onCancel }) => {
             <button
               type="button"
               onClick={onCancel}
-              className="py-2 px-4 rounded-md text-white bg-gray-500 hover:bg-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600"
+              className="py-2 px-4 rounded-md text-white bg-gray-500"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={uploading}
-              className={`py-2 px-4 rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 ${
-                uploading ? "opacity-50" : ""
-              }`}
+              className="py-2 px-4 rounded-md text-white bg-blue-500 disabled:bg-gray-400"
             >
               {uploading ? "Uploading..." : "Save Meal"}
             </button>

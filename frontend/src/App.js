@@ -13,6 +13,8 @@ import MealList from "../src/components/order/MealList"; // Add this line
 import Review from "../src/pages/Review";
 import ProtectedRoute from "../src/components/ProtectedRoute";
 import ProtectedRouteAdminOnly from "../src/components/ProtectedRouteAdminOnly";
+import Contact from "./pages/Contact";
+import AllMails from "../src/components/contact/AllMails";
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, darkMode, setDarkMode } =
@@ -89,7 +91,9 @@ const App = () => {
           <Route path="/meals/new" element={<MealForm darkMode={darkMode} />} />
           <Route path="/meals/:id" element={<MealForm darkMode={darkMode} />} />
 
+
           {/* Meal Details route */}
+
 
           {/* Review route */}
           <Route path="/feedback" element={<Review darkMode={darkMode} />} />
@@ -131,6 +135,31 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/contacts"
+            element={
+              <ProtectedRoute>
+                <Contact darkMode={darkMode} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contact/allmails"
+            element={
+              <ProtectedRouteAdminOnly>
+                <AllMails darkMode={darkMode} />
+              </ProtectedRouteAdminOnly>
+            }
+          />
+          {/* <Route
+            path="/contact"
+            element={
+              <ProtectedRoute>
+                <Contact darkMode={darkMode} />
+              </ProtectedRoute>
+            }
+          /> */}
+
           {/* Fallback route for 404 */}
           <Route path="*" element={<div>404 - Page Not Found</div>} />
         </Routes>

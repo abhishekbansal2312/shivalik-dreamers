@@ -44,7 +44,9 @@ const MealSchema = new mongoose.Schema({
   },
   image: {
     type: String, // URL to the meal image
+    default: "", // Default to an empty string if no image is provided
   },
+
   available: {
     type: Boolean,
     default: true, // Whether the meal is available for ordering
