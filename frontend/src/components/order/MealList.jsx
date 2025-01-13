@@ -31,14 +31,17 @@ const MealList = ({ darkMode, toggleDarkMode }) => {
         setIsAdmin(decodedToken.role === "admin");
 
         // Fetch meals from the backend
-        const mealsResponse = await fetch("http://localhost:4600/api/meals", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          credentials: "include",
-        });
+        const mealsResponse = await fetch(
+          "https://shivalik-dreamers.onrender.com/api/meals",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            credentials: "include",
+          }
+        );
 
         if (!mealsResponse.ok) throw new Error("Failed to fetch meals");
 
@@ -63,11 +66,14 @@ const MealList = ({ darkMode, toggleDarkMode }) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       try {
         const token = Cookies.get("authtoken");
-        const response = await fetch(`http://localhost:4600/api/meals/${id}`, {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-          credentials: "include",
-        });
+        const response = await fetch(
+          `https://shivalik-dreamers.onrender.com/api/meals/${id}`,
+          {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+            credentials: "include",
+          }
+        );
 
         if (!response.ok) {
           const errorData = await response.json();

@@ -22,7 +22,7 @@ const Login = ({ darkMode }) => {
       return;
     }
 
-    const url = `http://localhost:4600/api/auth/login`;
+    const url = `https://shivalik-dreamers.onrender.com/api/auth/login`;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
 

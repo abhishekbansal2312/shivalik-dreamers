@@ -88,7 +88,7 @@ const UpdateMealForm = ({ meal, setMeals, onSave, onCancel }) => {
     try {
       // Send the updated meal data to the backend API
       const response = await fetch(
-        `http://localhost:4600/api/meals/${meal._id}`,
+        `https://shivalik-dreamers.onrender.com/api/meals/${meal._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

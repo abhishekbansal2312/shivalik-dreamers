@@ -52,15 +52,18 @@ const MealForm = ({ setMeals, onSave, onCancel }) => {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
             // Send the meal data along with the image URL to the backend API
-            const response = await fetch("http://localhost:4600/api/meals", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                ...newMeal,
-                pictureURL: downloadURL, // Add the Firebase image URL
-              }),
-              credentials: "include",
-            });
+            const response = await fetch(
+              "https://shivalik-dreamers.onrender.com/api/meals",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  ...newMeal,
+                  pictureURL: downloadURL, // Add the Firebase image URL
+                }),
+                credentials: "include",
+              }
+            );
 
             if (!response.ok) {
               const errorData = await response.json();

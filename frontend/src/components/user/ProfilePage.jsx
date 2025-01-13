@@ -11,7 +11,7 @@
 //     const fetchUserDetails = async () => {
 //       try {
 //         const token = Cookies.get('authtoken');
-//         const response = await fetch(`http://localhost:4600/api/users/${id}`, {
+//         const response = await fetch(`https://shivalik-dreamers.onrender.com/api/users/${id}`, {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
 //           },
@@ -64,7 +64,7 @@
 //     const fetchUserDetails = async () => {
 //       try {
 //         const token = Cookies.get('authtoken');
-//         const response = await fetch(`http://localhost:4600/api/users/${id}`, {
+//         const response = await fetch(`https://shivalik-dreamers.onrender.com/api/users/${id}`, {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
 //           },
@@ -137,7 +137,7 @@
 //     const fetchUserDetails = async () => {
 //       try {
 //         const token = Cookies.get('authtoken');
-//         const response = await fetch(`http://localhost:4600/api/users/${id}`, {
+//         const response = await fetch(`https://shivalik-dreamers.onrender.com/api/users/${id}`, {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
 //           },
@@ -214,11 +214,14 @@ const UserDetail = ({ darkMode }) => {
     const fetchUserDetails = async () => {
       try {
         const token = Cookies.get("authtoken");
-        const response = await fetch(`http://localhost:4600/api/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `https://shivalik-dreamers.onrender.com/api/users/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const data = await response.json();
         if (response.ok) {
           setUser(data);
@@ -248,14 +251,17 @@ const UserDetail = ({ darkMode }) => {
   const handleUpdate = async () => {
     try {
       const token = Cookies.get("authtoken");
-      const response = await fetch(`http://localhost:4600/api/users/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedUser),
-      });
+      const response = await fetch(
+        `https://shivalik-dreamers.onrender.com/api/users/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedUser),
+        }
+      );
 
       if (response.ok) {
         setUser(updatedUser);
@@ -271,12 +277,15 @@ const UserDetail = ({ darkMode }) => {
   const handleDelete = async () => {
     try {
       const token = Cookies.get("authtoken");
-      const response = await fetch(`http://localhost:4600/api/users/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `https://shivalik-dreamers.onrender.com/api/users/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         navigate("/users"); // Redirect to users list or homepage

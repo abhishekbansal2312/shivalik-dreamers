@@ -15,7 +15,9 @@ const AllMails = ({ darkMode }) => {
   useEffect(() => {
     const fetchMails = async () => {
       try {
-        const response = await fetch("http://localhost:4600/api/contact");
+        const response = await fetch(
+          "https://shivalik-dreamers.onrender.com/api/contact"
+        );
         const data = await response.json();
         setMails(data);
         setFilteredMails(data);

@@ -34,14 +34,17 @@ const Users = ({ darkMode }) => {
     try {
       setLoading(true);
       const token = Cookies.get("authtoken");
-      const response = await fetch("http://localhost:4600/api/users", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://shivalik-dreamers.onrender.com/api/users",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         setUsers(data);
@@ -72,8 +75,8 @@ const Users = ({ darkMode }) => {
     const token = Cookies.get("authtoken");
     const method = isEditing ? "PUT" : "POST";
     const url = isEditing
-      ? `http://localhost:4600/api/users/${selectedUser}`
-      : "http://localhost:4600/api/users";
+      ? `https://shivalik-dreamers.onrender.com/api/users/${selectedUser}`
+      : "https://shivalik-dreamers.onrender.com/api/users";
 
     try {
       const response = await fetch(url, {
@@ -121,14 +124,17 @@ const Users = ({ darkMode }) => {
   const handleDelete = async (id) => {
     const token = Cookies.get("authtoken");
     try {
-      const response = await fetch(`http://localhost:4600/api/users/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        `https://shivalik-dreamers.onrender.com/api/users/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       if (response.ok) {
         fetchUsers();
         toast.success("User deleted successfully!");
@@ -171,7 +177,11 @@ const Users = ({ darkMode }) => {
   // Loading state
   if (loading) {
     return (
-      <p className={`min-h-screen flex justify-center items-center ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+      <p
+        className={`min-h-screen flex justify-center items-center ${
+          darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+        }`}
+      >
         Loading users...
       </p>
     );
@@ -182,7 +192,11 @@ const Users = ({ darkMode }) => {
     "bg-blue-500 hover:bg-blue-700 text-[12px] text-white font-normal py-2 px-4 rounded-md transition-colors duration-300";
 
   return (
-    <div className={`${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'} px-16 py-8`}>
+    <div
+      className={`${
+        darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+      } px-16 py-8`}
+    >
       <div className="flex flex-row sm:flex-row justify-between items-center max-w-full pb-4">
         <h2 className="text-lg sm:text-2xl font-semibold">Users Management</h2>
 
