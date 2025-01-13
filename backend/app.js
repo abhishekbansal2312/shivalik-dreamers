@@ -22,7 +22,7 @@ mongoose
 
 // CORS options
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://snazzy-daffodil-b238af.netlify.app",
   credentials: true,
 };
 
@@ -63,5 +63,5 @@ app.use((err, req, res, next) => {
 
 // Start the server
 app.listen(4600, () => {
-  console.log("Server is running on http://localhost:4600");
+  console.log("Server is running on https://shivalik-dreamers.onrender.com");
 });
